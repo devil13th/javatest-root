@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="qingjia" isExecutable="true">
+    <startEvent id="qingjia-start" name="开始请假"></startEvent>
+    <userTask id="qingjia-shenqing" name="请假申请" default="l03" activiti:assignee="zhangsan">
+      <documentation>请假申请 提交</documentation>
+    </userTask>
+    <userTask id="qingjia-shenpi2" name="副领导批假" activiti:assignee="wangwu"></userTask>
+    <userTask id="qingjia-shenpiA" name="正领导批假" activiti:assignee="lisi"></userTask>
+    <endEvent id="qingjia-end" name="请假完成"></endEvent>
+    <sequenceFlow id="l01" name="line01" sourceRef="qingjia-start" targetRef="qingjia-shenqing"></sequenceFlow>
+    <sequenceFlow id="l03" name="line03" sourceRef="qingjia-shenqing" targetRef="qingjia-shenpi2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${type==2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="l02" name="line02" sourceRef="qingjia-shenqing" targetRef="qingjia-shenpiA">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${type==1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="l04" name="line04" sourceRef="qingjia-shenpiA" targetRef="qingjia-end"></sequenceFlow>
+    <sequenceFlow id="l05" name="line05" sourceRef="qingjia-shenpi2" targetRef="qingjia-end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_qingjia">
+    <bpmndi:BPMNPlane bpmnElement="qingjia" id="BPMNPlane_qingjia">
+      <bpmndi:BPMNShape bpmnElement="qingjia-start" id="BPMNShape_qingjia-start">
+        <omgdc:Bounds height="35.0" width="35.0" x="81.0" y="85.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="qingjia-shenqing" id="BPMNShape_qingjia-shenqing">
+        <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="63.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="qingjia-shenpi2" id="BPMNShape_qingjia-shenpi2">
+        <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="213.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="qingjia-shenpiA" id="BPMNShape_qingjia-shenpiA">
+        <omgdc:Bounds height="80.0" width="100.0" x="325.0" y="63.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="qingjia-end" id="BPMNShape_qingjia-end">
+        <omgdc:Bounds height="35.0" width="35.0" x="357.0" y="235.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="l01" id="BPMNEdge_l01">
+        <omgdi:waypoint x="116.0" y="102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="180.0" y="103.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="28.0" x="126.0" y="102.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="l03" id="BPMNEdge_l03">
+        <omgdi:waypoint x="230.0" y="143.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="213.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="240.0" y="143.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="l02" id="BPMNEdge_l02">
+        <omgdi:waypoint x="280.0" y="103.0"></omgdi:waypoint>
+        <omgdi:waypoint x="325.0" y="103.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="28.0" x="290.0" y="103.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="l04" id="BPMNEdge_l04">
+        <omgdi:waypoint x="375.0" y="143.0"></omgdi:waypoint>
+        <omgdi:waypoint x="374.0" y="235.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="28.0" x="385.0" y="143.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="l05" id="BPMNEdge_l05">
+        <omgdi:waypoint x="280.0" y="253.0"></omgdi:waypoint>
+        <omgdi:waypoint x="327.0" y="252.0"></omgdi:waypoint>
+        <omgdi:waypoint x="357.0" y="252.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="28.0" x="290.0" y="253.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

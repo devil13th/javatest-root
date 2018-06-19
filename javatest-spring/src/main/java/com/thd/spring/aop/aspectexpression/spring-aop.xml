@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+ xmlns:aop="http://www.springframework.org/schema/aop"  
+ xmlns:tx="http://www.springframework.org/schema/tx"  
+ xsi:schemaLocation="http://www.springframework.org/schema/beans   
+ http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+ http://www.springframework.org/schema/tx   
+ http://www.springframework.org/schema/tx/spring-tx-2.0.xsd   
+ http://www.springframework.org/schema/aop   
+ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">  
+ 	
+ 	
+ 	<bean id="userService" class="com.thd.spring.aop.aspectexpression.UserServiceImpl"></bean>  
+ 	<bean id="myLog" class="com.thd.spring.aop.aspectexpression.MyLogImpl"></bean> 
+	<aop:config>
+        <aop:aspect id="test" ref="myLog">
+            <aop:pointcut id="method" expression="execution(* save*(..))"/>  
+            <aop:before method="beforeMethod" pointcut-ref="method" />
+        </aop:aspect>
+    </aop:config> 
+    
+    
+    <bean id="userService01" class="com.thd.spring.aop.aspectexpression.testa.UserServiceImpl01"></bean>
+    <aop:config>
+         <aop:aspect id="test01" ref="myLog">
+         	<!-- 任何公共方法的执行 -->
+            <!-- <aop:pointcut id="method01" expression="execution(public * *(..))"/>   -->
+            
+            <!-- com.thd包及子包下任何类的任何方法 -->
+            <!-- <aop:pointcut id="method01" expression="execution(* com.thd..*.*(..))"/> -->
+            
+            <!-- com.thd本身包下(不包含子包)任何类的任何方法 -->
+            <aop:pointcut id="method01" expression="execution(* com.thd.*.*(..))"/>
+            
+            <aop:before method="beforeMethod" pointcut-ref="method01" />
+        </aop:aspect>
+    </aop:config>   
+</beans>
+	

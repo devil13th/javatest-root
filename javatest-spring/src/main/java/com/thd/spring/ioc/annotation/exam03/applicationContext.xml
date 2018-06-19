@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<!-- A.启动用注释自动装配 -->
+	<context:annotation-config/>
+	
+	<!-- B.启动用注释自动装配  base-package指定的包下的类均自动注入-->
+	<context:component-scan base-package="com.thd.spring.ioc.annotation.exam03" />
+	
+	<!-- 注意：以上A,B两种方式任选其一都可以完成注释自动装配 -->
+	
+	
+	<bean id="usrDao" class="com.thd.spring.ioc.annotation.exam03.UsrDao"></bean>
+	<bean id="roleDao" class="com.thd.spring.ioc.annotation.exam03.RoleDao"></bean>
+	<bean id="funsDao" class="com.thd.spring.ioc.annotation.exam03.FunDao"></bean>
+	
+	<bean id="service" class="com.thd.spring.ioc.annotation.exam03.Service"></bean>
+	
+	
+</beans>

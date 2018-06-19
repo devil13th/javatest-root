@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- 读取的.properties的路径-->
+		<property name="location">
+			<value>classpath:com/thd/spring/transaction/annotation/resource/cfg.properties</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 第一种方式 使用dataSource配置SessionFactory -->
+	<!-- spring proxool集成 -->
+	<!--  <bean id="dataSource"
+		class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>${driverClassName}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${url}</value>
+		</property>
+		<property name="user" value="${usr}" />
+		<property name="password" value="${pwd}" />
+		<property name="alias" value="proxoolPool" />
+		<property name="prototypeCount" value="0" />
+		<property name="maximumConnectionCount" value="50" />
+		<property name="minimumConnectionCount" value="2" />
+		<property name="maximumActiveTime" value="300000" />
+		<property name="simultaneousBuildThrottle" value="50" />
+		<property name="houseKeepingTestSql" value="select CURRENT_DATE" />
+	</bean>-->
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${usr}" />
+		<property name="password" value="${pwd}" />
+	</bean>
+	
+	
+	
+	
+	
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${dialect}</prop>
+				<prop key="hibernate.show_sql">${showsql}</prop>
+				<prop key="hibernate.connection.autocommit">${autocommit}</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+			</props>
+		</property>
+
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/com/thd/spring/transaction/annotation/</value>
+			</list>
+		</property>
+	</bean>
+
+
+
+
+	<!-- hibernate hibernateTemplate配置 -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	<!-- 启动用注释自动装配 -->
+	<context:annotation-config/>
+	<!-- 扫描范围 -->
+	<context:component-scan base-package="com.thd.spring.transaction.annotation"/>
+	
+	
+	
+	
+	<!-- 事务处理 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager" >
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="query*" read-only="true"/>
+			<tx:method name="save*" propagation="REQUIRED" />    
+			<!-- 切记 rollback-for配置Exception , spring默认的是runtimeException才会回滚！！！ -->
+			<tx:method name="delete*" propagation = "REQUIRED" rollback-for="Exception"/>   
+			<tx:method name="update*" propagation = "REQUIRED" rollback-for="Exception"/>   
+			<tx:method name="add*" propagation = "REQUIRED" rollback-for="Exception"/>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>
+		</tx:attributes >  
+	</tx:advice >
+	
+	<aop:config>    
+		<aop:pointcut id="allManagerMethod" expression="execution(* com.thd.spring.transaction.annotation.service..*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod"/>    
+	</aop:config> 
+	
+	
+	<!-- dao 基类 -->
+	<bean id="dao" class="com.thd.spring.transaction.annotation.dao.BaseDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- jdbcTemplate配置 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	
+	
+	 
+</beans>

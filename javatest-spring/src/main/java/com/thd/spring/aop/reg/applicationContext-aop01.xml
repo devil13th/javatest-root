@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+ xmlns:aop="http://www.springframework.org/schema/aop"  
+ xmlns:tx="http://www.springframework.org/schema/tx"  
+ xsi:schemaLocation="http://www.springframework.org/schema/beans   
+ http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+ http://www.springframework.org/schema/tx   
+ http://www.springframework.org/schema/tx/spring-tx-2.0.xsd   
+ http://www.springframework.org/schema/aop   
+ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">  
+ 	
+ 
+	<import resource="classpath:com/thd/spring/aop/reg/applicationContext-aop.xml"/>
+	
+	<aop:config>
+		<!-- 所有包下的所有以save开头返回任意类型(或者无返回值)的方法 -->
+        <aop:aspect id="t01" ref="handler">
+            <aop:pointcut id="method01" expression="execution(* save*(..))"/>
+            <aop:before method="handler" pointcut-ref="method01" />
+        </aop:aspect>
+    
+    </aop:config> 
+</beans>
+	

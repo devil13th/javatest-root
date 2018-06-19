@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.thd.spring.transaction.annotation.pojo">
+	<class
+		name="Product"
+		table="product"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="proId"
+			type="string" 
+			column="pro_id"
+		>
+			<generator class="uuid.hex"/>
+		</id>
+
+		<property
+			name="proName"
+			column="pro_name"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="sortId"
+			column="sort_id"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

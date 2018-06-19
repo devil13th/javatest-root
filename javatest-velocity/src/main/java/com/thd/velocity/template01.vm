@@ -1,0 +1,25 @@
+### 设置一个myName的变量值是devil13th字符串
+#set($myName="devil13th")
+myName is ($myName)
+
+
+### 从VelocityContext中去name和date变量
+Welcome $name to Javayou.com! 
+today is $date
+
+###循环
+#foreach($item in $list)
+	$item
+#end
+
+###是否存在对象
+#if($msg)
+	alert($msg)
+#end
+
+#if($msg=="i'm 2 msg")
+	is i'm msg
+#end
+
+姓名：$user.name
+年龄：$user.age

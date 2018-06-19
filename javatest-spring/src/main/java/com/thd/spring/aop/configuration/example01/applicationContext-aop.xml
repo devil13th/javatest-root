@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+ xmlns:aop="http://www.springframework.org/schema/aop"  
+ xmlns:tx="http://www.springframework.org/schema/tx"  
+ xsi:schemaLocation="http://www.springframework.org/schema/beans   
+ http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+ http://www.springframework.org/schema/tx   
+ http://www.springframework.org/schema/tx/spring-tx-2.0.xsd   
+ http://www.springframework.org/schema/aop   
+ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">  
+ 	
+ 	
+ 	<bean id="logManager" class="com.thd.spring.aop.configuration.example01.LogManager"></bean>  
+ 	<bean id="securityHandler" class="com.thd.spring.aop.configuration.example01.SecurityHandler"></bean>  
+	<bean id="userManager" class="com.thd.spring.aop.configuration.example01.UserManagerImpl"></bean>
+	
+	
+	
+	<aop:config>
+        <!-- 定义切面aspect 横切性关注点所在的类(检查安全性的类)-->
+        <aop:aspect id="sercurity" ref="securityHandler">
+            <!-- 定义pointcut 切入点(将横切性关注点添加到什么位置  在什么地方检查安全性)-->
+            <aop:pointcut id="allSaveMethod" expression="execution(* save*(..)) || execution(* del*(..))"/>  
+            <!-- 定义advice 横切性关注点的内容 (检查安全性的方法) -->
+            <aop:before method="sercurityCheck" pointcut-ref="allSaveMethod" />
+        </aop:aspect>
+        
+        <!-- 定义切面aspect -->
+        <aop:aspect id="log" ref="logManager">  
+            <!-- 定义pointcut -->
+            <!-- <aop:pointcut id="userMethod" expression="execution(* save*(..)) || execution(* del*(..))"/> -->  
+            <aop:pointcut id="userMethod" expression="execution(* com.thd.spring.aop.configuration.example01.UserManagerImpl.save*(..)) || execution(* com.thd.spring.aop.configuration.example01.UserManagerImpl.del*(..))"/>  
+            <!-- 定义advice -->
+            <aop:after method="saveLog" pointcut-ref="userMethod" />
+        </aop:aspect>
+        
+        
+        <!-- 定义切面aspect -->
+        <aop:aspect id="time" ref="logManager">  
+            <!-- 定义pointcut -->
+            <!-- <aop:pointcut id="userMethod" expression="execution(* save*(..)) || execution(* del*(..))"/> -->  
+            <aop:pointcut id="timeMethod" expression="execution(* com.thd.spring.aop.configuration.example01.UserManagerImpl.save*(..)) || execution(* com.thd.spring.aop.configuration.example01.UserManagerImpl.del*(..))"/>  
+            <!-- 定义advice -->
+            <aop:around method="timeLog"  pointcut-ref="timeMethod"/>
+        </aop:aspect>
+        
+        
+        
+    </aop:config> 
+</beans>
+	

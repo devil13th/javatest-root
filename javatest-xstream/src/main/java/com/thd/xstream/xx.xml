@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<com.thd.xstream.User>
+  <name>devil13th</name>
+  <age>5</age>
+  <sex>male</sex>
+  <mes>1111111111</mes>
+  <card>
+    <no>110102....</no>
+  </card>
+</com.thd.xstream.User>

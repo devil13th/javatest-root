@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	
+	
+	<bean id="pubDao" class="com.thd.spring.ioc.webframe.PubDao"></bean>
+	
+	
+	<bean id="baseServiceImpl" abstract="true" class="com.thd.spring.ioc.webframe.BaseServiceImpl">
+		<property name="serviceFactory">
+			<ref bean="serviceFactory"/>
+		</property>
+		<property name="pubDao">
+			<ref bean="pubDao"/>
+		</property>
+	</bean>
+	
+	<bean id="serviceA" class="com.thd.spring.ioc.webframe.ServiceA" parent="baseServiceImpl"></bean>
+	<bean id="serviceB" class="com.thd.spring.ioc.webframe.ServiceB" parent="baseServiceImpl"></bean>
+	
+	
+	<bean id="serviceFactory" class="com.thd.spring.ioc.webframe.ServiceFactoryImpl">
+		<property name="serviceA">
+			<ref bean="serviceA"/>
+		</property>
+		<property name="serviceB">
+			<ref bean="serviceB"/>
+		</property>
+	</bean>	
+</beans>

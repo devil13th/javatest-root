@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<root>  
+	<title>dddd</title>
+    <rs id="a">  
+        <title>java 操作 excel </title>  
+        <mes>java 操作 excel 例子</mes>  
+        <url>0150/index.htm</url>  
+    </rs>  
+    <rs id="b">  
+        <title>Struts2 基础教程</title>  
+        <mes>Struts2 基础教程</mes>  
+        <url>0149.html</url>  
+    </rs>  
+</root>  

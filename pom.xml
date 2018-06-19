@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com-thd-javatest</groupId>
+	<artifactId>javatest-root</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.12</junit.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<!-- <scope>test</scope> -->
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+	</dependencies>
+	<modules>
+		<module>javatest-activiti</module>
+		<module>javatest-redis</module>
+		<module>javatest-acrobat</module>
+		<module>javatest-base64</module>
+		<module>javatest-dom4j</module>
+		<module>javatest-freemarker</module>
+		<module>javatest-spring</module>
+		<module>javatest-xstream</module>
+		<module>javatest-java</module>
+		<module>javatest-log4j</module>
+		<module>javatest-jjwt</module>
+		<module>javatest-gson</module>
+		<module>javatest-shiro</module>
+		<module>javatest-mail</module>
+		<module>javatest-lucene</module>
+		<module>javatest-velocity</module>
+		<module>javatest-jdom</module>
+		<module>javatest-mongodb</module>
+		<module>javatest-hibernate</module>
+		<module>javatest-util</module>
+		<module>javatest-quartz</module>
+	    <module>javatest-zip</module>
+	    <module>javatest-json</module>
+    	<module>javatest-basis</module>
+    	<module>javatest-springboot</module>
+	</modules>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>jar</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<!-- 这个插件是用来拷贝项目所依赖jar的，拷贝到WebRoot/WEB-INF/lib目录下，便于使用tomcat虚拟目录 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>jar</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

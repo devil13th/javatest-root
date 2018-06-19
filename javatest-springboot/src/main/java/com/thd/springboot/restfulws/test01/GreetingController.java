@@ -11,6 +11,7 @@ public class GreetingController {
 	private final AtomicLong counter = new AtomicLong();
 	
 	@RequestMapping("/springboot/greeting")
+	//url http://127.0.0.1:8080/springboot/greeting?name=devil13th
 	public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
 	    return new Greeting(counter.incrementAndGet(),String.format(template, name));
 	}

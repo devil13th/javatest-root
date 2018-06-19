@@ -1,4 +1,4 @@
-package com.thd.springboot.restfulws.test02;
+package com.thd.springboot.restfulws.test03;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestServiceImpl implements UserRestService {
 
 	static Map<Long, User> users = Collections.synchronizedMap(new HashMap<Long, User>());
-
+	
+	
+	
     public List<User> getUserList() {
         List<User> r = new ArrayList<User>(users.values());
         return r;
@@ -44,7 +46,8 @@ public class UserRestServiceImpl implements UserRestService {
     }
     
     /**
-     * url : http://127.0.0.1:8080/users/createUser/2?name=name1&age=5
+     * url : http://127.0.0.1:8888/sbt/users/createUser/2?name=name1&age=5
+     *       http://127.0.0.1:8888/sbt/users/createUser/6?name=name1&age=5
      */
     public String createUser(@PathVariable Long id, @ModelAttribute User user){
     	System.out.println("---------------");
@@ -53,6 +56,7 @@ public class UserRestServiceImpl implements UserRestService {
     	System.out.println(user.getAge());
     	System.out.println("---------------");
 		User u = new User();
+		u.setId(id);
 		u.setName(user.getName());
 		u.setAge(user.getAge());
 		users.put(id, u);

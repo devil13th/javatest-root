@@ -33,6 +33,22 @@
 		</dependency>
 		
 		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		    <version>2.0.3.RELEASE</version>
+		</dependency>
+		 
+		<!-- https://mvnrepository.com/artifact/org.wisdom-framework/mysql-connector-java -->
+		<dependency>
+		    <groupId>org.wisdom-framework</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.34_1</version>
+		</dependency>
+
+		
+		
 		
 				
 	</dependencies>

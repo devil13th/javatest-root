@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +28,9 @@ public class FormRestServiceImpl implements FormRestService {
 			f.setId("sys_"+i);
 			f.setName("name_" + i);
 			f.setAuthor("author_" + i);
-			f.setCustomTemplate("SYSTEM");
+			if(i % 5 ==0){
+				f.setCustomTemplate("1");
+			}
 			f.setDescription("description_" + i);
 			f.setPublishDate("2017-01-01 07:00:00");
 			f.setTitle("title_" + i);
@@ -35,12 +39,12 @@ public class FormRestServiceImpl implements FormRestService {
 		}
 		
 		
-		for(int i = 0 , j = 36 ; i < j ; i++){
+		for(int i = 0 , j = 10 ; i < j ; i++){
 			Form f = new Form();
 			f.setId("cus_"+i);
 			f.setName("name_" + i);
 			f.setAuthor("author_" + i);
-			f.setCustomTemplate("CUSTOM");
+			f.setCustomTemplate("0");
 			f.setDescription("description_" + i);
 			f.setPublishDate("2017-01-01 07:00:00");
 			f.setTitle("title_" + i);
@@ -66,6 +70,21 @@ public class FormRestServiceImpl implements FormRestService {
 		dg.setTotal(allFormMap.size());
 		return dg;
 	};
+	
+	
+	@RequestMapping(value = "/customFormList", method = RequestMethod.GET)
+	//get url http://127.0.0.1:8888/sbt/form/customFormList
+	public DataGrid getCustomFormList(HttpServletRequest request){
+		DataGrid dg = new DataGrid();
+		
+		System.out.println(request.getParameter("formId"));
+		List l = new ArrayList<Form>(cusFormMap.values());
+		dg.setRows(l);
+		dg.setTotal(l.size());
+		return dg;
+	};
+	
+	
 	
 	public DataGrid getFormList(@PathVariable int currentPage,@PathVariable int pageSize,@RequestParam(value="tp",defaultValue="0")String type) {
 		//System.out.println(currentPage);

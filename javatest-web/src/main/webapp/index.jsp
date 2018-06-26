@@ -4,12 +4,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>1234</title>
+<link rel='stylesheet'  href="<%=request.getContextPath() %>/webjars/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/jquery/2.2.4/jquery.min.js"></script>
+
+<script>
+</script>
 </head>
 <body>
-1
-2
-3
-4
-5
+<div id="a">webjars</div>
 </body>
 </html>

@@ -1,34 +1,260 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.thd.web</groupId>
-  <artifactId>javatest-web</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>javatest-web</name>
-  <description>javatest-web</description>
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>servlet-api</artifactId>
-	    <version>2.5</version>
-	    <scope>provided</scope>
-	</dependency>
-  </dependencies>
-  
-  
-  <build>
-	   <plugins>
-	     <plugin>
-	       <groupId>org.apache.maven.plugins</groupId>
-	       <artifactId>maven-compiler-plugin</artifactId>
-	       <version>3.5.1</version>
-	        <configuration>
-	         <source>1.8</source>
-	         <target>1.8</target>
-	         <encoding>utf-8</encoding>
-	       </configuration>
-	     </plugin>
-	   </plugins>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.thd.web</groupId>
+	<artifactId>javatest-web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>javatest-web</name>
+	<description>javatest-web</description>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.thd.web</groupId>
+			<artifactId>javatest-webp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+
+	</dependencies>
+
+	<!-- 变量配置 -->
+	<properties>
+		<projectVersion>dev project</projectVersion>
+	</properties>
+
+
+	<!-- 不同环境下的配置 -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<hello>dev</hello>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>test</id>
+			<properties>
+				<hello>test</hello>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+
+
+
+
+	<build>
+		<plugins>
+			<!-- 设置maven编译使用的jdk -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- 编译时打包源码到target -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- 在maven的compile 阶段就开始打包 -->
+						<phase>compile</phase>
+						<goals>
+							<!-- 源码单独作为一个jar包 -->
+							<goal>jar</goal>
+							<!--源码打进jar包中 类似执行mvn source:jar -->
+							<!-- <goal>jar-no-fork</goal> -->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+			<!-- 清理jar目录 -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>jar</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<!-- 拷贝项目所依赖jar到 jar目录下 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>jar</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<!-- 输出信息 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Using env.test.properties</echo>
+
+
+								<echo>-------------- 项目属性 -------------</echo>
+								<echo>注：所有pom中的元素都可以用 project. 前缀进行引用,以下是部分常用的</echo>
+								<echo>项目版本: ${project.version} </echo>
+								<echo>项目groupId： ${project.groupId}</echo>
+								<echo>项目artifactId： ${project.artifactId}</echo>
+								<echo>项目name： ${project.name}</echo>
+
+
+								<echo>父项目版本: ${parent.version} </echo>
+								<echo>父项目groupId： ${project.parent.groupId}</echo>
+								<echo>父项目artifactId： ${project.parent.artifactId}</echo>
+								<echo>父项目name： ${project.parent.name}</echo>
+
+
+
+								<echo>-------------- pom项目属性 -------------</echo>
+								<echo>注：定义在properties标签中的属性 </echo>
+								<echo>hello = ${hello}</echo>
+								<echo>projectVersion = ${projectVersion}</echo>
+
+								<echo>-------------- 环境变量 -------------</echo>
+								<echo>maven home = ${env.M2_HOME}</echo>
+								<echo>java home = ${env.JAVA_HOME}</echo>
+
+								<echo>-------------- 内置属性 -------------</echo>
+								<echo>
+
+
+
+									项目根目录 ${basedir}
+									构建目录，缺省为target ${project.build.directory}
+									构建过程输出目录，缺省为target/classes ${project.build.outputDirectory}
+									产出物名称，缺省为${project.artifactId}-${project.version}
+									${project.build.finalName}
+									打包类型，缺省为jar ${project.packaging}
+									Java 运行时环境版本 ${java.version}
+									Java 运行时环境供应商 ${java.vendor}
+									Java 供应商的 URL ${java.vendor.url}
+									Java 安装目录 ${java.home}
+									Java 虚拟机规范版本 ${java.vm.specification.version}
+									Java 虚拟机规范供应商 ${java.vm.specification.vendor}
+									Java 虚拟机规范名称 ${java.vm.specification.name}
+									Java 虚拟机实现版本 ${java.vm.version}
+									Java 虚拟机实现供应商 ${java.vm.vendor}
+									Java 虚拟机实现名称 ${java.vm.name}
+									Java 运行时环境规范版本 ${java.specification.version}
+									Java 运行时环境规范供应商 ${java.specification.vendor}
+									Java 运行时环境规范名称 ${java.specification.name}
+									Java 类格式版本号 ${java.class.version}
+									Java 类路径 ${java.class.path}
+									加载库时搜索的路径列表 ${java.library.path}
+									默认的临时文件路径 ${java.io.tmpdir}
+									要使用的 JIT 编译器的名称 ${java.compiler}
+									一个或多个扩展目录的路径 ${java.ext.dirs}
+									操作系统的名称 ${os.name}
+									操作系统的架构 ${os.arch}
+									操作系统的版本 ${os.version}
+									文件分隔符（在 UNIX 系统中是“/”） ${file.separator}
+									路径分隔符（在 UNIX 系统中是“:”） ${path.separator}
+									行分隔符（在 UNIX 系统中是“/n”） ${line.separator}
+									用户的账户名称 ${user.name}
+									用户的主目录 ${user.home}
+									用户的当前工作目录 ${user.dir}
+
+
+								</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+			<!-- 分模块开发后合并war -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<overlays>
+						<overlay>
+							<groupId>com.thd.web</groupId>
+							<artifactId>javatest-webp</artifactId>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>cfg.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>cfg.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+
+
 	</build>
+
+
+
+
 </project>

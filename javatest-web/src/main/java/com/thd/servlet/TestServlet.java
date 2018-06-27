@@ -26,10 +26,10 @@ public class TestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet 1234341 .... ");
+		System.out.println("doGet 12343412 .... ");
 		System.out.println(request.getParameter("a"));
 		Writer out= response.getWriter();
-		out.write("Hello World22 !!");
+		out.write("Hello World " + request.getParameter("a"));
 	}
 
 	/**

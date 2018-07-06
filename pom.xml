@@ -50,6 +50,8 @@
 	    <module>javatest-json</module>
     	<module>javatest-basis</module>
     	<module>javatest-springboot</module>
+    	<module>javatest-springboot-war</module>
+    	<module>javatest-webjars</module>
 	</modules>
 
 

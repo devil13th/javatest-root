@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 //@PropertySource("classpath:com/thd/springboot/edu/jdbctemplate/server.properties") 
-//@PropertySource(value={"classpath:com/thd/springboot/edu/jdbctemplate/server.properties","classpath:com/thd/springboot/edu/jdbctemplate/db.properties"},encoding="utf-8") 
+@PropertySource(value={"classpath:com/thd/springboot/edu/jdbctemplate/server.properties"},encoding="utf-8") 
 public class StartServer {
 
 	

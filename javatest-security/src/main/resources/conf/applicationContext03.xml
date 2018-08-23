@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    					http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                		http://www.springframework.org/schema/tx
+                		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                		http://www.springframework.org/schema/security
+                		http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<!-- 此配置文件为使用spring自带数据库进行认证 且配置了登录页面 -->
+	
+	<!-- 数据源 -->
+	<beans:bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<!-- 此为c3p0在spring中直接配置datasource c3p0是一个开源的JDBC连接池 -->
+		<beans:property name="driverClass" value="com.mysql.jdbc.Driver" />
+ 
+		<beans:property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/springsecurity?characterEncoding=UTF-8" />
+		<beans:property name="user" value="root" />
+		<beans:property name="password" value="123456" />
+		<beans:property name="maxPoolSize" value="50"></beans:property>
+		<beans:property name="minPoolSize" value="10"></beans:property>
+		<beans:property name="initialPoolSize" value="10"></beans:property>
+		<beans:property name="maxIdleTime" value="25000"></beans:property>
+		<beans:property name="acquireIncrement" value="1"></beans:property>
+		<beans:property name="acquireRetryAttempts" value="30"></beans:property>
+		<beans:property name="acquireRetryDelay" value="1000"></beans:property>
+		<beans:property name="testConnectionOnCheckin" value="true"></beans:property>
+		<beans:property name="idleConnectionTestPeriod" value="18000"></beans:property>
+		<beans:property name="checkoutTimeout" value="5000"></beans:property>
+		<beans:property name="automaticTestTable" value="t_c3p0"></beans:property>
+	</beans:bean>
+	
+	<http auto-config='true'>
+		<intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/adminPage.jsp" access="ROLE_ADMIN" />
+		<intercept-url pattern="/**" access="ROLE_USER" />
+		
+		<form-login login-page="/login.jsp" default-target-url="/index.jsp"
+	        authentication-failure-url="/login.jsp?error=true" />
+	    <logout invalidate-session="true"
+		      logout-success-url="/login.jsp"
+		      logout-url="/j_spring_security_logout"/>  
+	</http>
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"/>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

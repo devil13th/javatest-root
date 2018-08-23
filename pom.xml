@@ -52,6 +52,7 @@
     	<module>javatest-springboot</module>
     	<module>javatest-springboot-war</module>
     	<module>javatest-webjars</module>
+    	<module>javatest-security</module>
 	</modules>
 
 

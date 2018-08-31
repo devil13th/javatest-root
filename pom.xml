@@ -53,6 +53,7 @@
     	<module>javatest-springboot-war</module>
     	<module>javatest-webjars</module>
     	<module>javatest-security</module>
+    	<module>javatest-thread</module>
 	</modules>
 
 

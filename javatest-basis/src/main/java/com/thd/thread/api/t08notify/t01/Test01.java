@@ -21,7 +21,6 @@ public class Test01 {
 		}
 		synchronized(obj) {
 			obj.notify();
-			
 			System.out.println("叫醒你们其中的一个 但是 main还没有放弃锁 ");
 		}
 	}

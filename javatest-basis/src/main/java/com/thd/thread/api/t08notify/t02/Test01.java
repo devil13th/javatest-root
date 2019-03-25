@@ -7,9 +7,7 @@ public class Test01 {
 		for(int i = 0 , j = 5 ; i < j ; i++) {
 			ThreadA thread = new ThreadA(obj);
 			Thread t = new Thread(thread,"thread-" + i);
-			
 			t.start();
-			
 		}
 		
 		

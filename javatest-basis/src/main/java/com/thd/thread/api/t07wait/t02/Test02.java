@@ -11,6 +11,7 @@ public class Test02 {
 		
 		
 		t.join();
+		
 		System.out.println("1234");
 		Thread.currentThread().sleep(4500);
 		System.out.println("finish ...");

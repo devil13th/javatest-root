@@ -2,7 +2,12 @@ package com.thd.thread.api.t03threadsafety;
 
 public class Web1230603 extends Thread{
 	private int ticketCount = 10;
-
+	
+	/**
+	 * 不使用同步,有可能运行到ticketCount--;这句之前被切换到其他线程了
+	 * 所以ticketCount就是一个竞争的资源
+	 * System.out.println和ticketCount--;应该是粒子性操作,这两句执行时不应该有其他进程执行这两句
+	 */
 	@Override
 	public void run() {
 		while(ticketCount>0) {

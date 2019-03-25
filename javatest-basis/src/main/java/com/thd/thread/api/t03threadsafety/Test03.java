@@ -1,7 +1,9 @@
 package com.thd.thread.api.t03threadsafety;
 
 public class Test03 {
-
+	/**
+	 * 该例子未使用synchronized关键字,在竞争某一资源的时候出现了问题
+	 */
 	public static void main(String[] args) {
 		Web1230603 web = new Web1230603();
 		int robotNum = 2;

@@ -6,7 +6,6 @@ public class Web1230602 extends Thread{
 	@Override
 	public void run() {
 		while(ticketCount>0) {
-			
 			//为了效果明显,睡一下
 			try {
 				Thread.sleep(10);
@@ -21,6 +20,7 @@ public class Web1230602 extends Thread{
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
+					System.out.println(" be waked up ");
 					e.printStackTrace();
 				}
 			}

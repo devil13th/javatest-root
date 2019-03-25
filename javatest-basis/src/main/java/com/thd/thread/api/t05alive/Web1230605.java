@@ -2,7 +2,6 @@ package com.thd.thread.api.t05alive;
 
 public class Web1230605 extends Thread{
 	private int ticketCount = 10;
-
 	@Override
 	public void run() {
 		while(ticketCount>0) {

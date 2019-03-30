@@ -1,4 +1,4 @@
-package com.thd.thread.api.t03threadsafety;
+package com.thd.thread.api.t03threadsafety.t01;
 
 public class Web1230603a extends Thread{
 	private int ticketCount = 10;

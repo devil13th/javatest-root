@@ -1,4 +1,4 @@
-package com.thd.thread.api.t03threadsafety;
+package com.thd.thread.api.t03threadsafety.t01;
 
 public class Test03 {
 	/**

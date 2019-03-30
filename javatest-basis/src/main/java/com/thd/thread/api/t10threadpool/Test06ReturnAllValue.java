@@ -5,31 +5,47 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
-import com.thd.thread.api.t01createthread.Web1230601b;
-
 public class Test06ReturnAllValue {
 	public static void main(String[] args) {
-		ExecutorService es = Executors.newFixedThreadPool(3);
+		/**
+		 * 测试多个线程同时执行时返回值
+		 */
+		ExecutorService es = Executors.newFixedThreadPool(2);
 		
+		//创建一个睡1000毫秒后会有返回值的线程
+		Thread03 ta = new Thread03(3000);
+		//创建一个睡3000毫秒后会有返回值的线程
+		Thread03 tb = new Thread03(1000);
 		
-		for(int i = 0 , j = 18 ; i < j ; i++){
-			Thread02 t = new Thread02(i);
-	        //1.执行 Callable 方式，需要 FutureTask 实现类的支持，用于接收运算结果。
-	        FutureTask<String> result = new FutureTask<String>(t);
+		FutureTask<String> ft1 = new FutureTask<String>(ta);
+		FutureTask<String> ft2 = new FutureTask<String>(tb);
+		long begin = System.currentTimeMillis();
+		es.submit(ft1);
+		es.submit(ft2);
+		
+		//关闭线程池,不会当时关闭,等线程池中的线程执行完毕后才会关闭
+		es.shutdown();
+		//立刻关闭线程池,无论是否线程池中的线程是否执行完毕
+		//es.shutdownNow();
+		try {
+			System.out.println(ft1.get());
+			long end = System.currentTimeMillis();
+			System.out.println((end-begin)/1000);
+			System.out.println(ft2.get());
+			end = System.currentTimeMillis();
+			System.out.println((end-begin)/1000);
 			
-			es.submit(result);
 			
-			try {
-				//调用futureTask.get()方法会阻塞线程,直到获取到结果
-				System.out.println(result.get());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 
 	}
 

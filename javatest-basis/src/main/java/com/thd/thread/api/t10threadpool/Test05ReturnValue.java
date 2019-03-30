@@ -21,6 +21,7 @@ public class Test05ReturnValue {
 	        //1.执行 Callable 方式，需要 FutureTask 实现类的支持，用于接收运算结果。
 	        FutureTask<String> result = new FutureTask<String>(t);
 			
+	        //要调用 ExecutorService.submit()方法才可以获得返回值不能用ExecutorService.execute()方法
 			es.submit(result);
 			
 			try {

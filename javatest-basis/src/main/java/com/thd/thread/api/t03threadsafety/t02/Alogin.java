@@ -1,4 +1,4 @@
-package com.thd.thread.api.t04threadsafety;
+package com.thd.thread.api.t03threadsafety.t02;
 
 public class Alogin implements Runnable {
 

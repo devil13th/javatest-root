@@ -12,10 +12,10 @@ public class T02 {
 		System.out.println(System.getProperty("java.class.path"));
 		System.out.println(T02.class.getClassLoader());
 		
-		Class c = T02.class.getClassLoader().loadClass("com.thd.jvm.test001.A");
+		Class c = T02.class.getClassLoader().loadClass("com.thd.jvm.classloaded.T01");
 		System.out.println(c);
 		System.out.println("###############################");
-		
+		System.out.println(Math.class.getClassLoader());
 		char a = '\u00BA';
 		System.out.println(a);
 		

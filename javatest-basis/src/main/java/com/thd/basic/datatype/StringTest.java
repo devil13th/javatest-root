@@ -34,5 +34,19 @@ public class StringTest extends TestCase{
 		 * 
 		 */
 	}
+	
+	
+	@Test
+	public void test03(){
+		String a = "hello";
+		String b = new String("hello");
+		System.out.println(a==b); //false
+		System.out.println(a.equals(b)); //true
+		
+		/**
+		 * a 直接指向常量池中"abc"的地址
+		 * b 指向的是堆中的new String("...")的内存地址,而该内存中又有一个指向常量池"abc"的地址
+		 */
+	}
 
 }

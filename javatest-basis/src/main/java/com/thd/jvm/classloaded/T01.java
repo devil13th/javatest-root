@@ -7,13 +7,14 @@
 package com.thd.jvm.classloaded;
 
 public class T01 {
-	static int x =1 ;
 	static{
 		x = 2;
 		System.out.println("加载 类 T01");
 	}
+	static int x =1 ;
+	
 	public static void main(String[] args){
-		System.out.println("main()...");
+		System.out.println("main() 方法开始...");
 		//创建数组并不会初始化数组的元素类型
 		Son[] ss = new Son[5];
 		System.out.println("创建数组完成");
@@ -21,6 +22,8 @@ public class T01 {
 		Son s = new Son();
 		
 		Son s2 = new Son();
+		System.out.println(T01.x);
+		System.out.println(Father.name);
 		System.out.println("finish");
 		
 		
@@ -28,31 +31,3 @@ public class T01 {
 	}
 }
 
-
-class Father{
-	
-	//只在类初始化的时候(第一次加载(引用))的时候运行
-	static{
-		System.out.println("加载 类 Father - 只执行一次"); 
-	}
-	
-	private String name;
-	
-	public  Father(){
-		System.out.println("Father 实例化");
-	}
-	
-	
-}
-
-class Son extends Father {
-	//只在类初始化的时候(第一次加载(引用))的时候运行
-	static{
-		System.out.println("加载 类 Son");
-	}
-	
-	public Son(){
-		System.out.println("Son 实例化");
-	}
-	
-}

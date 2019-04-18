@@ -13,6 +13,13 @@ public static int COUNT = 0;
 	//递归循环,可以导致StackOverflowError异常
 	public void makeStackOverflow(){
 		System.out.println(COUNT++);
+		
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		makeStackOverflow();
 	}
 	

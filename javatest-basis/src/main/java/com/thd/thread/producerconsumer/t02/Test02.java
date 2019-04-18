@@ -2,7 +2,11 @@ package com.thd.thread.producerconsumer.t02;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 假死现象
+ * @author devil13th
+ *
+ */
 public class Test02 {
 
 	public static void main(String[] args) {
@@ -34,9 +38,16 @@ public class Test02 {
 			e.printStackTrace();
 		}
 		
-		
-		for(int i = 0 , j = l.size() ; i < j ; i++ ) {
-			System.out.println(l.get(i).getName() + " " + l.get(i).getState());
+		while(true){
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for(int i = 0 , j = l.size() ; i < j ; i++ ) {
+				System.out.println(l.get(i).getName() + " " + l.get(i).getState());
+			}
 		}
 		
 		
@@ -44,15 +55,8 @@ public class Test02 {
 		 * 假死 . 所有的线程都wait住了
 		 * 
 		 * 
-		 * 消费者2执行  value=""   wait  p1|p2|c1|c2  =>  就绪|就绪|等待|等待
-		 * 消费者1执行  value=""   wait  p1|p2|c1|c2  => 就绪|就绪|等待|等待
-		 * 生产者1执行  value=""  唤醒消费者2 循环下一次   wait  p1|p2|c1|c2  => 等待|就绪|等待|就绪
-		 * 生产者2执行  value="x"  wait  p1|p2|c1|c2  => 等待|等待|等待|就绪
-		 * 消费者2执行  value="x" 唤醒消费者1 循环下一次   wait p1|p2|c1|c2  => 等待|等待|就绪|等待
-		 * 消费者1执行  value=""   wait  p1|p2|c1|c2  => 等待|等待|等待|等待 => 假死
-		 * 
-		 * 
-		 * 生产者1执行  set value="xxx"   后进入下次循环后  wait               p1|p2|c1|c2  =>    等待|就绪|就绪|就绪
+
+		 * 生产者1执行  set value="xxx"   后进入下次循环后  wait  p1|p2|c1|c2  =>   等待|就绪|就绪|就绪
 		 * 生产者2执行  因为value有值                      wait              p1|p2|c1|c2  =>    等待|等待|就绪|就绪
 		 * 消费者1执行  set value=""      唤醒生产者1 进入下次循环后    wait    p1|p2|c1|c2  =>    就绪|等待|等待|就绪
 		 * 生产者1执行  set value="xxx"   唤醒生产者2后进入下一循环  wait       p1|p2|c1|c2  =>    等待|就绪|等待|就绪
@@ -69,7 +73,7 @@ public class Test02 {
 }
 
 class ValueObject{
-	public static String value = "";
+	volatile public static String value = "";
 }
 
 //生产者
@@ -83,6 +87,7 @@ class P {
 		try {
 			synchronized(lock){
 				while(!ValueObject.value.equals("")) {
+					System.out.println(Thread.currentThread().getName() + ":" +Math.random());
 					lock.wait();
 				}
 				String value = System.currentTimeMillis() + "_" + System.nanoTime();
@@ -109,12 +114,14 @@ class C {
 		try {
 			synchronized(lock){
 				while(ValueObject.value.equals("")) {
+					System.out.println(Thread.currentThread().getName() + ":" +Math.random());
 					lock.wait();
 				}
 				String value = ValueObject.value;
 				System.out.println(Thread.currentThread().getName() + "   get() ValueObject.value = " + value);
 				ValueObject.value = "";
 				lock.notify();
+				
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

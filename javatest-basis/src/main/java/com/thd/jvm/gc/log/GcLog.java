@@ -28,6 +28,7 @@ public class GcLog {
 		
 		System.gc();
 		System.out.println("----------- finish -------------");
+		
 	}
 	
 	/**

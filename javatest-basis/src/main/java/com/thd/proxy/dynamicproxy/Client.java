@@ -20,13 +20,17 @@ public class Client {
          * 
          * 通过这个动态代理对象 来的调用我们自己的代理对象 来执行方法
          */
-		Subject subject = (Subject)Proxy.newProxyInstance(handler.getClass().getClassLoader(), realSubject.getClass().getInterfaces(),handler);
+		Subject subject = (Subject)Proxy.newProxyInstance(
+				handler.getClass().getClassLoader(), 
+				realSubject.getClass().getInterfaces(),
+				handler);
 		
 		System.out.println(subject.getClass().getName());
-		
+		System.out.println("-------------");
 		subject.rent();
+		System.out.println("-------------");
 		subject.hello(" dynamic proxy ");
-		
+		System.out.println("-------------");
 		
 		/*
 		 * 代理对象是在程序运行时产生的，而不是编译期；

@@ -1,4 +1,4 @@
-package com.thd.thread.api.t11join.t02;
+package com.thd.thread.api.t10join.t02;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public class Test01 {
-
+	/**
+	 * 主线程等待其他线程结束后汇总结果
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		long begin = System.currentTimeMillis();
 		
@@ -21,7 +24,7 @@ public class Test01 {
 			t.start();
 			
 			
-			//t.join() 后  main阻塞等待t运行完后在运行
+			//t.join() 后  main阻塞等待t运行完后在运行  , 使用callable也可以做到,而且非阻塞,等到使用get方法时阻塞等待执行结果
 			try {
 				t.join();
 			} catch (InterruptedException e) {

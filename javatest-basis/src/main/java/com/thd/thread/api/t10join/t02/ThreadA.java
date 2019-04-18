@@ -1,4 +1,4 @@
-package com.thd.thread.api.t11join.t02;
+package com.thd.thread.api.t10join.t02;
 
 import java.util.Map;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.thd.thread.api.t11join.t01;
+package com.thd.thread.api.t10join.t01;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.thd.json;
+package com.thd.json.jsonlib;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +13,9 @@ import org.junit.Test;
 
 public class JsonTest extends TestCase {
 	@Test
+	/**
+	 * JSON字符串与Object相互转换
+	 */
 	public void test01(){
 		Person p0 = new Person();
 		p0.setBirthday(new Date());
@@ -51,9 +54,6 @@ public class JsonTest extends TestCase {
 		System.out.println(jsonStr);
 		
 		
-		
-		
-		
 		 JSONObject  jsonObject = JSONObject.fromObject (jsonStr);
 		 System.out.println(jsonObject);
 		 System.out.println(jsonObject.getString("name"));
@@ -63,5 +63,38 @@ public class JsonTest extends TestCase {
 		 
          JSONArray jsonArray = JSONArray.fromObject("[{a:1},{a:2},{a:3}]") ;
          
+	}
+	
+	
+	
+	@Test
+	public void test02(){
+		
+		JsonConfig config = new JsonConfig();     
+		//config.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));  
+		config.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd"));  
+		
+		
+		
+		JSONObject parent = new JSONObject();
+		
+		parent.put("name", "张三");
+		parent.put("age", 5);
+		parent.put("birthday", new Date());
+		
+		
+		List l = new ArrayList();
+		for(int i = 0 , j = 5 ; i < j ; i++){
+			JSONObject child = new JSONObject();
+			child.put("name", "child-" + i);
+			child.put("age", i);
+			child.put("birthday", new Date());
+			l.add(child);
+		}
+		parent.put("childs", l);
+		
+		String str = parent.toString();
+		System.out.println(str);
+		
 	}
 }

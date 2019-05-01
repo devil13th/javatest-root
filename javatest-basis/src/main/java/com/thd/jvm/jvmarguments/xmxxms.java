@@ -1,6 +1,6 @@
 package com.thd.jvm.jvmarguments;
 
-public class xmxxms {
+public class XmxXms {
 	
 	public static void test01(){
 		//jvm 参数：-Xmx200m -Xms100m

@@ -12,13 +12,23 @@ public class ThreadA implements Runnable {
 	}
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(this.waitTime);
+			System.out.println(Thread.currentThread().getName() + " sleep : " + waitTime);
+//			try {
+//				Thread.sleep(this.waitTime);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+			for(int i = 0 , j = 100 ; i < j ; i++){
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(Thread.currentThread().getName() + "_" + i);
+			}
 			ct.put(Thread.currentThread().getName(),new Random().nextInt(5));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 
 	}

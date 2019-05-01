@@ -1,4 +1,4 @@
-package com.thd.json;
+package com.thd.json.fastjson;
 
 import java.util.Date;
 import java.util.List;

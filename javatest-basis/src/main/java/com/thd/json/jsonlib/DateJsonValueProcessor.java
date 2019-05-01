@@ -1,4 +1,4 @@
-package com.thd.json;
+package com.thd.json.jsonlib;
 
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;

@@ -16,7 +16,8 @@ public class ThreadA implements Callable<Integer> {
 		Integer r = 0;
 		try {
 			Thread.sleep(this.waitTime);
-			r = new Random().nextInt(5);
+			//r = new Random().nextInt(5);
+			r = 1;
 			System.out.println(Thread.currentThread().getName() + ":[" + this.waitTime + "] : " + r);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

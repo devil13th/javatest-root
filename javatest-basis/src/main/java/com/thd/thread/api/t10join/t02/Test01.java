@@ -18,19 +18,26 @@ public class Test01 {
 		List<FutureTask<Integer>> l = new ArrayList<FutureTask<Integer>>();
 		Map<String,Integer> ct = new HashMap<String,Integer>();
 		for(int i = 0 , j = 5 ; i < j ; i++){
-			FutureTask<Integer> ft = new FutureTask<Integer>(new ThreadA(i * 1000,ct));
+			FutureTask<Integer> ft = new FutureTask<Integer>(new ThreadA(5 * 1000,ct));
 			l.add(ft);
 			Thread t = new Thread(ft,"T" + i);
 			t.start();
 			
+			/**
+			 * t.join() 后  main阻塞等待t运行完后在运行  , 
+			 * 使用callable也可以做到,而且非阻塞,
+			 * 等到使用get方法时阻塞等待执行结果
+			 * 
+			 * 使用callable则最后运行玩的时间是所有线程执行最长的时间
+			 * 如果使用t.join()则是所有线程执行时间之和(相当于没有使用线程)
+			 */
 			
-			//t.join() 后  main阻塞等待t运行完后在运行  , 使用callable也可以做到,而且非阻塞,等到使用get方法时阻塞等待执行结果
-			try {
-				t.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				t.join();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 			
 			
@@ -49,6 +56,16 @@ public class Test01 {
 			}
 			
 		}
+		
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		long end = System.currentTimeMillis();
 		System.out.println( "总时间" + (end - begin)/1000 );
 

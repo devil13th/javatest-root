@@ -1,6 +1,7 @@
 package com.thd.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -136,6 +137,44 @@ public class JdbcUtilTest extends TestCase {
 		System.out.println( (endTime - startTime) / 1000);
 	}
 	
+	
+	@Test
+	public void testBatchInsert2() throws Exception{
+		long startTime = System.currentTimeMillis();
+		Connection conn = JdbcUtil.getConn();
+		int ct = 0;
+		String sql = "INSERT INTO test_user (user_id,user_name,sex,age,birthday,mes,class_id) value(?,?,?,?,?,?,?)";
+		PreparedStatement pstmt;
+		
+		conn.setAutoCommit(false);
+		pstmt = conn.prepareStatement(sql);
+		
+		for(int i = 0;i<100000;i++){
+
+			pstmt.setString(1,"u_" + i);
+			pstmt.setString(2, "user_" + i);
+			pstmt.setString(3, "1");
+			pstmt.setInt(4,i% 100);
+			pstmt.setDate(5, new Date(System.currentTimeMillis()));
+			pstmt.setString(6, "msg_" + i);
+			pstmt.setString(7,String.valueOf(i%100));
+			pstmt.addBatch();
+			//System.out.println(i);
+			if(i%500 == 0){
+				pstmt.executeBatch();
+				pstmt.clearBatch();
+			}
+		}
+		pstmt.executeBatch();
+		pstmt.clearBatch();
+		conn.commit();
+//		for(int x = 0 , y = r.length ; x < y ; x++){
+//			System.out.println(r[x]);
+//		}
+		JdbcUtil.closeConn(conn);
+		long endTime = System.currentTimeMillis();
+		System.out.println( (endTime - startTime) / 1000);
+	}
 	
 
 }

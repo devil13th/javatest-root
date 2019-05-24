@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class JdbcUtil {
 	public static Connection getConn() {
 	    String driver = "com.mysql.cj.jdbc.Driver";
-	    String url = "jdbc:mysql://localhost:3306/test?serverTimezone=GMT&charset=utf-8";
+	    String url = "jdbc:mysql://192.168.76.128:3306/test?serverTimezone=GMT&charset=utf-8";
 	    String username = "root";
 	    String password = "123456";
 	    Connection conn = null;

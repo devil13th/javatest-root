@@ -59,7 +59,7 @@ public class DataInitTest extends TestCase {
 		pstmt = conn.prepareStatement(sql);
 		
 		int batchNo = 1000;
-		for(int i = 0;i<1000000;i++){
+		for(int i = 0;i<100000;i++){
 
 			pstmt.setString(1,"u_" + i);
 			pstmt.setString(2, "user_" + i);

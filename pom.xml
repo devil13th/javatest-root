@@ -54,6 +54,7 @@
     	<module>javatest-webjars</module>
     	<module>javatest-security</module>
     	<module>javatest-thread</module>
+    	<module>javatest-activemq</module>
 	</modules>
 
 

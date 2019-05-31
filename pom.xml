@@ -55,6 +55,7 @@
     	<module>javatest-security</module>
     	<module>javatest-thread</module>
     	<module>javatest-activemq</module>
+    	<module>javatest-mybatis</module>
 	</modules>
 
 

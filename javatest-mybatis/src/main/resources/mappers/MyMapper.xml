@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="MyMapper">
+   <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+      resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+    -->
+   <select id="selectUser" resultType="com.thd.mybatis.pojo.User">
+      select * from tb_user where id = #{id}
+   </select>
+   
+   <select id="selectUserForMap" resultType="java.util.Map">
+      select * from tb_user where id = #{id}
+   </select>
+   
+   <select id="queryUserAll" resultType="com.thd.mybatis.pojo.User">
+        select * from tb_user;
+    </select>
+    
+    <select id="queryUserAllForMap" resultType="java.util.Map">
+        select id as id , user_name as uname,password as pwd from tb_user;
+    </select>
+    
+    <select id="queryUserForCondition" resultType="java.util.Map">
+        
+        <![CDATA[ select id as id , user_name as uname,password as pwd from tb_user where 1=1 ]]>
+        
+        
+          <if test="userName != null and userName !=''">
+          	<![CDATA[
+		    and user_name like #{userName}
+		    ]]>
+		  </if>
+		  <if test="name != null and name != ''">
+		    <![CDATA[and name like #{name}]]>
+		  </if>
+  
+  
+    </select>
+    
+    
+</mapper>

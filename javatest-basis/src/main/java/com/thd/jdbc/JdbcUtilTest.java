@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import junit.framework.TestCase;
 
@@ -19,22 +20,35 @@ public class JdbcUtilTest extends TestCase {
 	@Test
 	public void testInsert() {
 		Connection conn = JdbcUtil.getConn();
-		int i = 0;
-		String sql = "insert into cash (name,money) values(?,?)";
-		PreparedStatement pstmt;
 		try {
-			pstmt = (PreparedStatement) conn.prepareStatement(sql);
-			pstmt.setString(1, "devil13th");
-			pstmt.setInt(2, 5);
-			i = pstmt.executeUpdate();
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(i);
 		
-		JdbcUtil.closeConn(conn);
+			conn.setAutoCommit(false);
+		
+			int i = 0;
+			String sql = "insert into cash (name,money) values(?,?)";
+			PreparedStatement pstmt;
+			try {
+				pstmt = (PreparedStatement) conn.prepareStatement(sql);
+				pstmt.setString(1, "devil13th");
+				pstmt.setInt(2, 5);
+				i = pstmt.executeUpdate();
+				
+				conn.commit();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				conn.rollback();
+			}
+			System.out.println(i);
+			
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}finally{
+			JdbcUtil.closeConn(conn);
+		}
 	}
 
 	@Test
@@ -174,6 +188,47 @@ public class JdbcUtilTest extends TestCase {
 		JdbcUtil.closeConn(conn);
 		long endTime = System.currentTimeMillis();
 		System.out.println( (endTime - startTime) / 1000);
+	}
+	
+	
+	
+	
+	
+	@Test
+	public void testTransaction() {
+		Connection conn = JdbcUtil.getConn();
+		try {
+		
+			conn.setAutoCommit(false);
+		
+			int i = 0;
+			String sql = "insert into transaction_test (id,name,age) values(?,?,?)";
+			PreparedStatement pstmt;
+			try {
+				pstmt = (PreparedStatement) conn.prepareStatement(sql);
+				pstmt.setString(1,String.valueOf(UUID.randomUUID()).replace("-",""));
+				pstmt.setString(2, "devil13th");
+				pstmt.setInt(3, (int) (Math.random() * 100));
+				i = pstmt.executeUpdate();
+				
+				int x = 1/0;
+				
+				conn.commit();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				conn.rollback();
+			}
+			System.out.println(i);
+			
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}finally{
+			JdbcUtil.closeConn(conn);
+		}
 	}
 	
 

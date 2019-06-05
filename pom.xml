@@ -56,6 +56,7 @@
     	<module>javatest-thread</module>
     	<module>javatest-activemq</module>
     	<module>javatest-mybatis</module>
+    	<module>javatest-springannotation</module>
 	</modules>
 
 

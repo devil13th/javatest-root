@@ -10,6 +10,8 @@ public class Test {
 	 * 
 	 * 叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用。
 	 * 我们暂且把这个状态就叫做barrier，当调用await()方法之后，线程就处于barrier了
+	 * 
+	 * 类似于一个可以复用的countdownlatch,当计数减到0后重新进行计数
 	 * @param args
 	 */
     public static void main(String[] args) {

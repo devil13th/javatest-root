@@ -40,12 +40,17 @@ public class MyBatisTest {
 	}
 	
 	
+	
+	
+	
 	@Test
 	public void testselectMap(){
 		 // 获取sqlSession
         SqlSession sqlSession = sqlSessionFactory.openSession();
         System.out.println(" =========== sqlSession.selectMap ============== ");
-        Map m = sqlSession.selectOne("MyMapper.selectUserForMap", 1);
+        Map cd = new HashMap();
+        cd.put("id", 1);
+        Map m = sqlSession.selectOne("MyMapper.selectUserForMap", cd);
         System.out.println(m);
         sqlSession.close();
 	}
@@ -60,6 +65,22 @@ public class MyBatisTest {
 	     List l2 = sqlSession.selectList("queryUserAllForMap");
 	     System.out.println(l2);
 	     sqlSession.close();
+	}
+	
+	
+	@Test
+	public void testselectMap2(){
+		 // 获取sqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        System.out.println(" =========== sqlSession.queryUserBySex ============== ");
+        //selectMap方法返回的是一个map,key是每条记录的指定的属性
+        //这个指定的属性是selectMap的第三个参数
+        //map的value是相应的每条记录
+        Map condition = new HashMap();
+        condition.put("sex", 1);
+        Map m = sqlSession.selectMap("MyMapper.queryUserBySex", condition, "name");
+        System.out.println(m);
+        sqlSession.close();
 	}
 	
 	@Test

@@ -19,6 +19,10 @@
         select * from tb_user;
     </select>
     
+    <select id="queryUserBySex" resultType="java.util.Map">
+        select * from tb_user where sex = #{sex}
+    </select>
+    
     <select id="queryUserAllForMap" resultType="java.util.Map">
         select id as id , user_name as uname,password as pwd from tb_user;
     </select>

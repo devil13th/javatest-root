@@ -18,6 +18,6 @@ public class BookService {
 	@Autowired
 	private BookDao aBookDaoImpl;
 	public String toString(){
-		return "bookservice:" + aBookDaoImpl.toString();
+		return "bookservice中的BookDao实例为:" + aBookDaoImpl.toString();
 	}
 }

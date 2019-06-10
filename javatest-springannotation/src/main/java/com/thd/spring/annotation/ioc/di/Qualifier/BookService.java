@@ -12,7 +12,7 @@ public class BookService {
 	@Autowired
 	private BookDao bookDao;
 	public String toString(){
-		return "bookservice:" + bookDao.toString();
+		return "bookservice中的BookDao实例为:" + bookDao.toString();
 	}
 	
 }

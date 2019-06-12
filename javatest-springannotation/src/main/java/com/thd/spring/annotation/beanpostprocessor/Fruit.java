@@ -1,8 +1,8 @@
-package com.thd.spring.annotation.ioc.beanpostprocessor;
+package com.thd.spring.annotation.beanpostprocessor;
 
 import org.springframework.stereotype.Component;
 @Component
-@MyAnnotation(transferTo="com.thd.spring.annotation.ioc.beanpostprocessor.Animal")
+@MyAnnotation(transferTo="com.thd.spring.annotation.beanpostprocessor.Animal")
 public class Fruit {
 	private String name = "Fruit";
 	private int age = 1;

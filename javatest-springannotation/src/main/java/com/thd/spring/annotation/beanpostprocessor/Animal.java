@@ -1,4 +1,4 @@
-package com.thd.spring.annotation.ioc.beanpostprocessor;
+package com.thd.spring.annotation.beanpostprocessor;
 
 public class Animal {
 	

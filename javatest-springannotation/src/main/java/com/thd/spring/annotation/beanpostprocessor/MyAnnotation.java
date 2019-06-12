@@ -1,4 +1,4 @@
-package com.thd.spring.annotation.ioc.beanpostprocessor;
+package com.thd.spring.annotation.beanpostprocessor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

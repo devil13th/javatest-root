@@ -1,4 +1,4 @@
-package com.thd.spring.annotation.ioc.beanpostprocessor;
+package com.thd.spring.annotation.beanpostprocessor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

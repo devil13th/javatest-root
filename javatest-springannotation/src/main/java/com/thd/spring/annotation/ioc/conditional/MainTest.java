@@ -12,7 +12,6 @@ public class MainTest {
 		System.out.println("-----------IOC 容器初始化完成------------");
 		
 		Environment env = applicationContext.getEnvironment();
-		
 	
 		
 		String[] beanNames = applicationContext.getBeanDefinitionNames();

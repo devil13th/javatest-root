@@ -1,12 +1,14 @@
-package com.thd.spring.annotation.ioc.aware;
+package com.thd.spring.annotation.aware;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 //@Lazy
-public class Animal implements ApplicationContextAware,EnvironmentAware{
+public class Animal implements ApplicationContextAware,EnvironmentAware,BeanFactoryAware{
 	
 	private String name = "Animal";
 	private int age = 1;
@@ -14,21 +16,32 @@ public class Animal implements ApplicationContextAware,EnvironmentAware{
 	
 	
 	private ApplicationContext applicationContext;
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
+	//实现ApplicationContextAware接口来获取 applicationContext
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
 		System.out.println("通过BeanPostProcess的实际应用获取applicationContext");
 		this.applicationContext = applicationContext;
 		
 	}
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
 	
 	
 	
-	
-	
+	private BeanFactory beanFactory ;
+	//实现BeanFactoryAware接口来获取beanFactory
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		this.beanFactory = beanFactory;
+	}
+	public BeanFactory getBeanFactory() {
+		return beanFactory;
+	}
+
+
+
 	private Environment environment;
+	//实现EnvironmentAware接口来获取environment
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
 	}

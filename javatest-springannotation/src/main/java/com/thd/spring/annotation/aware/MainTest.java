@@ -1,4 +1,4 @@
-package com.thd.spring.annotation.ioc.aware;
+package com.thd.spring.annotation.aware;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 /**
@@ -22,12 +22,14 @@ public class MainTest {
 		System.out.println(animal.getEnvironment());
 		System.out.println(" ----------  获取properties文件name属性");
 		System.out.println(animal.getEnvironment().getProperty("name"));
+		System.out.println(" ----------  获取beanFactory");
+		System.out.println(animal.getBeanFactory());
 		
-		System.out.println(" ---------------- IOC中的Ben -------------");
-		String[] beanNames = applicationContext.getBeanDefinitionNames();
-		for(String name : beanNames){
-			System.out.println(name);
-		}
+//		System.out.println(" ---------------- IOC中的Ben -------------");
+//		String[] beanNames = applicationContext.getBeanDefinitionNames();
+//		for(String name : beanNames){
+//			System.out.println(name);
+//		}
 		System.out.println(" ---------------- 关闭容器 -------------");
 		//关闭容器调用Bean的销毁方法
 		applicationContext.close();

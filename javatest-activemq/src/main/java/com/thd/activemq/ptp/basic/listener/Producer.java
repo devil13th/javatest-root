@@ -1,4 +1,4 @@
-package com.thd.activemq.pubsub.basic;
+package com.thd.activemq.ptp.basic.listener;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -12,7 +12,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 事务
+ * @author devil13th
+ *
+ */
 public class Producer {
 	
 	 //connection的工厂
@@ -42,32 +46,29 @@ public class Producer {
             connection = factory.createConnection();
             //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
             connection.start();
-            //非事务形会话,第一个参数是false则第二个参数才起作用
-            // Session.AUTO_ACKNOWLEDGE 为自动签收,当消费者成功的从receive方法返回的时候，或者MessageListener.onMessage方法成功返回的时候，会话会自动确认消费者收到消息
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            //创建Session 第一个参数是是否开启事务,第二个参数是签收类型 
+            //对于消息生产者来说,使用第一个参数即可,第二个参数偏向于消息的消费者
+            session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
             //创建一个到达的目的地，其实想一下就知道了，activemq不可能同时只能跑一个队列吧，这里就是连接了一个名为"text-msg"的队列，这个会话将会到这个队列，当然，如果这个队列不存在，将会被创建
-            destination = session.createTopic("basic-topic");
+            destination = session.createQueue("ptp-basic-listener-test");
             //从session中，获取一个消息生产者
             producer = session.createProducer(destination);
-            //设置生产者的模式，有两种可选
-            //DeliveryMode.PERSISTENT 当activemq关闭的时候，队列数据将会被保存
-            //DeliveryMode.NON_PERSISTENT 当activemq关闭的时候，队列里面的数据将会被清空
-            //producer.setDeliveryMode(DeliveryMode.PERSISTENT);
             
             
             //创建一条消息，当然，消息的类型有很多，如文字，字节，对象等
             //可以通过session.create..方法来创建出来
             for(int i = 0 ; i < 5 ; i ++){
             	//设置消息体
-            	TextMessage textMsg = session.createTextMessage("message" + i);
+            	TextMessage textMsg = session.createTextMessage("玩啥吃啥?" + i + "_" + Math.random());
             
                 producer.send(textMsg);
                 System.out.println("[+] " + textMsg.getText());
             }
             
             System.out.println("发送消息成功");
-            //即便生产者的对象关闭了，程序还在运行哦
             producer.close();
+            session.close();
+            connection.close();
             
         } catch (JMSException e) {
             e.printStackTrace();

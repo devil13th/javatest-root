@@ -12,7 +12,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 事务
+ * @author devil13th
+ *
+ */
 public class Producer {
 	
 	 //connection的工厂
@@ -42,33 +46,34 @@ public class Producer {
             connection = factory.createConnection();
             //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
             connection.start();
-            // 使用事务形会话 , createSession方法第一个参数为true则第二个参数不起作用
+            
+            //***************************//
+            //connection.createSession中第一个参数是事务控制,第二个参数是签收方式
+            //开启事务形会话,第一个参数是true(开启事务)则第二个参数不起作用
+            //其实第一个参数是true则第二个参数就默认是Session.AUTO_ACKNOWLEDGE,即使设置成其他值也不会生效
+            //对于消息的生产者来说如果开启事务则发送消息后必须调用commit()方法来提交事务,消息才会真正提交到MQ
             session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             //创建一个到达的目的地，其实想一下就知道了，activemq不可能同时只能跑一个队列吧，这里就是连接了一个名为"text-msg"的队列，这个会话将会到这个队列，当然，如果这个队列不存在，将会被创建
-            destination = session.createTopic("pubsubbasic");
+            destination = session.createQueue("transaction-test");
             //从session中，获取一个消息生产者
             producer = session.createProducer(destination);
-            //设置生产者的模式，有两种可选
-            //DeliveryMode.PERSISTENT 当activemq关闭的时候，队列数据将会被保存
-            //DeliveryMode.NON_PERSISTENT 当activemq关闭的时候，队列里面的数据将会被清空
-            //producer.setDeliveryMode(DeliveryMode.PERSISTENT);
             
-            
-            //创建一条消息，当然，消息的类型有很多，如文字，字节，对象等
-            //可以通过session.create..方法来创建出来
             for(int i = 0 ; i < 5 ; i ++){
             	//设置消息体
             	TextMessage textMsg = session.createTextMessage("玩啥吃啥?" + i + "_" + Math.random());
             
                 producer.send(textMsg);
                 System.out.println("[+] " + textMsg.getText());
-                // 如果使用事务形会话 则必须进行commit()提交,否则消息不能发送到broker
+                
+                //***************************//
+                // 如果使用事务形会话 则必须进行commit()提交才能够将消息发送到MQ服务器
                 session.commit();
             }
             
             System.out.println("发送消息成功");
-            //即便生产者的对象关闭了，程序还在运行哦
             producer.close();
+            session.close();
+            connection.close();
             
         } catch (JMSException e) {
             e.printStackTrace();

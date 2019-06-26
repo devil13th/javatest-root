@@ -44,7 +44,7 @@ public class Producer {
             connection.start();
             //非事务形会话,第一个参数是false则第二个参数才起作用
             // Session.CLIENT_ACKNOWLEDGE 为客户端签收后才会认为消息被消费
-            //这种模式中，确认实在会话层上进行，确认一个呗消费的消息将自动确认所有已被会话消费的消息。例如，如果一个消息消费者消费了10个消息，然后确认第5个消息，name所有10个消息都被确认
+            //这种模式中，确认实在会话层上进行，确认一个被消费的消息将自动确认所有已被会话消费的消息。例如，如果一个消息消费者消费了10个消息，然后确认第5个消息，name所有10个消息都被确认
             session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
             //创建一个到达的目的地，其实想一下就知道了，activemq不可能同时只能跑一个队列吧，这里就是连接了一个名为"text-msg"的队列，这个会话将会到这个队列，当然，如果这个队列不存在，将会被创建
             destination = session.createQueue("clientacknowledge");

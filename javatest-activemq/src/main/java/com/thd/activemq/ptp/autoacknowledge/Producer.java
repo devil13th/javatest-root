@@ -12,7 +12,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 自动签收
+ * @author devil13th
+ *
+ */
 public class Producer {
 	
 	 //connection的工厂
@@ -42,6 +46,8 @@ public class Producer {
             connection = factory.createConnection();
             //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
             connection.start();
+            
+            //***************************//
             //非事务形会话,第一个参数是false则第二个参数才起作用
             // Session.AUTO_ACKNOWLEDGE 为自动签收,当消费者成功的从receive方法返回的时候，或者MessageListener.onMessage方法成功返回的时候，会话会自动确认消费者收到消息
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -69,6 +75,9 @@ public class Producer {
             //即便生产者的对象关闭了，程序还在运行哦
             producer.close();
             
+            session.close();
+            connection.close();
+            System.out.println("关闭连接");
         } catch (JMSException e) {
             e.printStackTrace();
         }

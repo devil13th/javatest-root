@@ -13,7 +13,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 自动签收
+ * @author devil13th
+ *
+ */
 public class Consumer {
 	 //connection的工厂
     private ConnectionFactory factory;
@@ -39,6 +43,10 @@ public class Consumer {
             connection = factory.createConnection();
             //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
             connection.start();
+            
+            
+            //***************************//
+            //connection.createSession中第一个参数是事务控制,第二个参数是签收方式
             //非事务形会话,第一个参数是false则第二个参数才起作用
             // Session.AUTO_ACKNOWLEDGE 为自动签收,当消费者成功的从receive方法返回的时候，或者MessageListener.onMessage方法成功返回的时候，会话会自动确认消费者收到消息
             session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
@@ -47,22 +55,42 @@ public class Consumer {
             //根据session，创建一个接收者对象
             consumer = session.createConsumer(destination);
             
+            
+            // ----------------------- 使用监听器的方式接收消息  S ------------------//
             //实现一个消息的监听器
             //实现这个监听器后，以后只要有消息，就会通过这个监听器接收到
-            consumer.setMessageListener(new MessageListener() {
-                public void onMessage(Message message) {
-                    try {
-                        //获取到接收的数据
-                        String text = ((TextMessage)message).getText();
-                        //确认消息已接收,提交事务
-                        System.out.println("- 消费:" + text);
-                    } catch (JMSException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            //使用监听器接收消息,程序最后不要关闭session和Connection
+//            consumer.setMessageListener(new MessageListener() {
+//                public void onMessage(Message message) {
+//                    try {
+//                        //获取到接收的数据
+//                        String text = ((TextMessage)message).getText();
+//                        //确认消息已接收,提交事务
+//                        System.out.println("- 消费:" + text);
+//                    } catch (JMSException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+            // ----------------------- 使用监听器的方式接收消息  E ------------------//
+            
+            
+            
+            // ----------------------- 使用主动接收方式接收消息 S ------------------//
+            while(true){
+            	Message message = consumer.receive();
+            	 //获取到接收的数据
+                String text = ((TextMessage)message).getText();
+                //确认消息已接收,提交事务
+                System.out.println("- 消费:" + text);
+            }
+            // ----------------------- 使用主动接收方式接收消息 E ------------------//
+            
             //关闭接收端，也不会终止程序哦
 //            consumer.close();
+//            session.close();
+//            connection.close();
+//            System.out.println("关闭连接");
         } catch (JMSException e) {
             e.printStackTrace();
         }

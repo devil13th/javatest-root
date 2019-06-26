@@ -1,4 +1,4 @@
-package com.thd.activemq.pubsub.basic;
+package com.thd.activemq.pubsub.durable;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -12,7 +12,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 持久化的topic
+ * @author devil13th
+ *
+ */
 public class Producer {
 	
 	 //connection的工厂
@@ -34,33 +38,22 @@ public class Producer {
     
 	public void start(){
         try {
-        	//从工厂中得到连接对象并启动对象
-            //根据用户名，密码，url创建一个连接工厂   
-        	//参数分别为设置好的用户名，密码，以及映射到的tcp或者直接设置url
             factory = new ActiveMQConnectionFactory(MQCfg.USER_NAME, MQCfg.PASSWORD, MQCfg.BROKER_URL);
-            //从工厂中获取一个连接
             connection = factory.createConnection();
-            //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
-            connection.start();
-            //非事务形会话,第一个参数是false则第二个参数才起作用
-            // Session.AUTO_ACKNOWLEDGE 为自动签收,当消费者成功的从receive方法返回的时候，或者MessageListener.onMessage方法成功返回的时候，会话会自动确认消费者收到消息
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            //创建一个到达的目的地，其实想一下就知道了，activemq不可能同时只能跑一个队列吧，这里就是连接了一个名为"text-msg"的队列，这个会话将会到这个队列，当然，如果这个队列不存在，将会被创建
-            destination = session.createTopic("basic-topic");
-            //从session中，获取一个消息生产者
+            destination = session.createTopic("durable topic");
             producer = session.createProducer(destination);
-            //设置生产者的模式，有两种可选
-            //DeliveryMode.PERSISTENT 当activemq关闭的时候，队列数据将会被保存
-            //DeliveryMode.NON_PERSISTENT 当activemq关闭的时候，队列里面的数据将会被清空
-            //producer.setDeliveryMode(DeliveryMode.PERSISTENT);
             
             
-            //创建一条消息，当然，消息的类型有很多，如文字，字节，对象等
-            //可以通过session.create..方法来创建出来
+            //设置持久化的topic !!!!!!!! 持久化主题必须设置
+            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+            //特别注意：持久化的主题 connection.start()必须放到创建生产者且设置了持久化后面!!!!!!!!!!!!!
+            connection.start();
+            
+            
             for(int i = 0 ; i < 5 ; i ++){
             	//设置消息体
             	TextMessage textMsg = session.createTextMessage("message" + i);
-            
                 producer.send(textMsg);
                 System.out.println("[+] " + textMsg.getText());
             }
@@ -68,7 +61,8 @@ public class Producer {
             System.out.println("发送消息成功");
             //即便生产者的对象关闭了，程序还在运行哦
             producer.close();
-            
+            session.close();
+            connection.close();
         } catch (JMSException e) {
             e.printStackTrace();
         }

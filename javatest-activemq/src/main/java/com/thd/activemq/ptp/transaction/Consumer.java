@@ -13,7 +13,11 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.thd.activemq.cfg.MQCfg;
-
+/**
+ * 事务
+ * @author devil13th
+ *
+ */
 public class Consumer {
 	 //connection的工厂
     private ConnectionFactory factory;
@@ -39,10 +43,15 @@ public class Consumer {
             connection = factory.createConnection();
             //测试过这个步骤不写也是可以的，但是网上的各个文档都写了
             connection.start();
-            //开启事务形会话,第一个参数是true则第二个参数不起作用
+            
+            //***************************//
+            //connection.createSession中第一个参数是事务控制,第二个参数是签收方式
+            //开启事务形会话,第一个参数是true(开启事务)则第二个参数不起作用
+            //其实第一个参数是true则第二个参数就默认是Session.AUTO_ACKNOWLEDGE,即使设置成其他值也不会生效
+            //对于消息的消费者来说如果开启事务则接收消息后必须调用commit()方法来提交事务,消息才会真正被消费,否则会被重复消费
             session = connection.createSession(true,Session.AUTO_ACKNOWLEDGE);
             //创建一个到达的目的地，其实想一下就知道了，activemq不可能同时只能跑一个队列吧，这里就是连接了一个名为"text-msg"的队列，这个会话将会到这个队列，当然，如果这个队列不存在，将会被创建
-            destination = session.createTopic("pubsubbasic");
+            destination = session.createQueue("transaction-test");
             //根据session，创建一个接收者对象
             consumer = session.createConsumer(destination);
             
@@ -52,12 +61,6 @@ public class Consumer {
             consumer.setMessageListener(new MessageListener() {
                 public void onMessage(Message message) {
                     try {
-                    	//getJMSXXX 一系列方法是获取消息头
-                    	int p = message.getJMSPriority();
-                    	System.out.println(p);
-                    	//getXXXProperty 一系列方法是获取消息属性
-                    	String name = message.getStringProperty("name");
-                    	System.out.println(name);
                         //获取到接收的数据
                         String text = ((TextMessage)message).getText();
                         //确认消息已接收,提交事务
@@ -67,7 +70,8 @@ public class Consumer {
                         System.out.println("- 消费:" + text);
                         //message.acknowledge();
                         
-                        //事务形会话 必须提交才会被认为成功消费,否则下次还会接收相同的消息
+                        //***************************//
+                        //事务形会话 必须提交才会被认为成功签收,否则下次还会接收相同的消息,被重复消费
                         session.commit(); 
                     } catch (JMSException e) {
                         e.printStackTrace();

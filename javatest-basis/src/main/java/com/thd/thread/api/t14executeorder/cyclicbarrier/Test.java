@@ -39,7 +39,15 @@ public class Test {
                 e.printStackTrace();
             }
             System.out.println("所有线程写入完毕，继续处理其他任务...");
-            
+            try {
+				cyclicBarrier.await();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (BrokenBarrierException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             System.out.println("线程"+Thread.currentThread().getName()+"再次写入数据...");
             try {
 				cyclicBarrier.await();

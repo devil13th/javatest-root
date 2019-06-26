@@ -26,7 +26,6 @@ public class MessageService {
 		Message ms = null;
 		//相当于 synchronized(Object) 语句块开始
 		lock.lock();
-		
 		while(queue.size() <= 0){
 			System.out.println("                                                                " + Thread.currentThread().getName() + " Waiting " );
 			try {

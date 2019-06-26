@@ -9,7 +9,7 @@ public class Test {
 	 * 
 	 * CountDownLatch latch = new CountDownLatch(2); 创建一个计数为2的计数器
 	 * latch.countDown(); 会减1
-	 * latch.await();会阻塞程序,知道计数器为0才往下执行
+	 * latch.await();会阻塞程序,直到计数器为0才往下执行
 	 * 
 	 * 比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，
 	 * 此时就可以利用CountDownLatch来实现这种功能了。

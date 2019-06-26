@@ -1,7 +1,7 @@
-package com.thd.thread.api.t14executeorder.semaphore;
+package com.thd.thread.semaphore;
 
 import java.util.concurrent.Semaphore;
-//Semaphore 的作用是控制线程只能有指定数量的线程同时运行
+//Semaphore 的作用是控制线程只能有指定数量的线程处于运行状态,如果存在更多的线程则阻塞
 public class Test {
     public static void main(String[] args) {
         int N = 8;            //工人数

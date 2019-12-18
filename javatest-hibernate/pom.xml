@@ -40,13 +40,19 @@
 		    <artifactId>spring-jdbc</artifactId>
 		    <version>${spring.version}</version>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-			<groupId>mysql-connector-java</groupId>
+			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>3.0.17</version>
-			<classifier>bin</classifier>
+			<version>3.1.14</version>
 		</dependency>
+
+		<!--		<dependency>-->
+<!--			<groupId>mysql-connector-java</groupId>-->
+<!--			<artifactId>mysql-connector-java</artifactId>-->
+<!--			<version>3.0.17</version>-->
+<!--			<classifier>bin</classifier>-->
+<!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>

@@ -140,7 +140,8 @@ public class QuartzTest extends TestCase{
 			System.out.println("查询定时任务");
 			System.out.println("------------------------------------------");
 			for(String groupName : scheduler.getJobGroupNames()) {
-				for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.groupEquals(groupName))) {
+				for(Object objKey : scheduler.getJobKeys(GroupMatcher.groupEquals(groupName))) {
+					JobKey jobKey = (JobKey)objKey;
 					String jobName = jobKey.getName();
 					String jobGroup = jobKey.getGroup();
 					JobDetail jd = scheduler.getJobDetail(jobKey);
@@ -168,7 +169,8 @@ public class QuartzTest extends TestCase{
 			System.out.println("查询定时任务");
 			System.out.println("------------------------------------------");
 			for(String groupName : scheduler.getJobGroupNames()) {
-				for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.groupEquals(groupName))) {
+				for(Object objKey : scheduler.getJobKeys(GroupMatcher.groupEquals(groupName))) {
+					JobKey jobKey = (JobKey)objKey;
 					String jobName = jobKey.getName();
 					String jobGroup = jobKey.getGroup();
 					JobDetail jd = scheduler.getJobDetail(jobKey);

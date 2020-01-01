@@ -231,8 +231,9 @@ public class PdfWaterMarkUtils {
             under.setGState(gs);//透明度
             under.beginText();
             under.setColorFill(BaseColor.BLACK);// 文字水印 颜色
-            under.setFontAndSize(font, 38);// 文字水印 字体及字号
+            under.setFontAndSize(font, 10);// 文字水印 字体及字号
             under.setTextMatrix(textWidth, textHeight);// 文字水印 起始位置
+            //对其方式, 文字内容,宽,高,倾斜角度
             under.showTextAligned(Element.ALIGN_CENTER, textMark, textWidth, textHeight, 0);
             under.endText();
         }

@@ -8,6 +8,7 @@ package com.thd.json;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -60,6 +61,8 @@ public class Test {
 
 
 	public static void testMapToJson(){
+
+
 		Map m = new HashMap();
 		m.put("name","devil13th");
 		m.put("age",5);

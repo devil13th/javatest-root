@@ -1,0 +1,72 @@
+===============================================基本语法=================================
+
+
+---------------------xml中唯一的标签取值---------------------
+<?name?> 
+
+---------------------判断取值---------------------
+等于 <?if: sex =’’?>——<?end if?> 
+
+不等于 <?if: sex !='1'?> xxxx <?end if?>
+
+--------------------- 循环 ---------------------
+<?for-each:work?>
+	<?workname?>
+	<?for-each:workperson?>
+		<?personname?>
+	<?end for-each?>
+<?end for-each?>
+
+===============================================xml例子=================================
+<root>
+	<name></name>
+	<sex></sex>
+	<work>
+		<workname></workname>
+		<worktime></worktime>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+	</work>
+	<work>
+		<workname></workname>
+		<worktime></worktime>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+	</work>
+	<work>
+		<workname></workname>
+		<worktime></worktime>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+		<workperson>
+			<personname></personname>
+			<personjob></personjob>
+		</workperson>
+	</work>
+</root>

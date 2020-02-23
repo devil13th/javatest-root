@@ -1,0 +1,24 @@
+mvn install:install-file -DgroupId=com.bi -DartifactId=activation -Dversion=v1.0 -Dpackaging=jar -Dfile=activation.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=bicmn -Dversion=v1.0 -Dpackaging=jar -Dfile=bicmn.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=bipres -Dversion=v1.0 -Dpackaging=jar -Dfile=bipres.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=collections -Dversion=v1.0 -Dpackaging=jar -Dfile=collections.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=CROSSTAB -Dversion=v1.0 -Dpackaging=jar -Dfile=CROSSTAB.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=i18nAPI_v3 -Dversion=v1.0 -Dpackaging=jar -Dfile=i18nAPI_v3.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=iText-2.1.7 -Dversion=v1.0 -Dpackaging=jar -Dfile=iText-2.1.7.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=jdbc12 -Dversion=v1.0 -Dpackaging=jar -Dfile=jdbc12.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=jewt4 -Dversion=v1.0 -Dpackaging=jar -Dfile=jewt4.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=mail -Dversion=v1.0 -Dpackaging=jar -Dfile=mail.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=RTF2PDF -Dversion=v1.0 -Dpackaging=jar -Dfile=RTF2PDF.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=RTFValidation -Dversion=v1.0 -Dpackaging=jar -Dfile=RTFValidation.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=share -Dversion=v1.0 -Dpackaging=jar -Dfile=share.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=TBCHART -Dversion=v1.0 -Dpackaging=jar -Dfile=TBCHART.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=versioninfo -Dversion=v1.0 -Dpackaging=jar -Dfile=versioninfo.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xdochartstyles -Dversion=v1.0 -Dpackaging=jar -Dfile=xdochartstyles.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xdocore -Dversion=v1.0 -Dpackaging=jar -Dfile=xdocore.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xdoparser -Dversion=v1.0 -Dpackaging=jar -Dfile=xdoparser.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=XDOREPORT -Dversion=v1.0 -Dpackaging=jar -Dfile=XDOREPORT.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xmlparserv2 -Dversion=v1.0 -Dpackaging=jar -Dfile=xmlparserv2.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xmlparserv2-904 -Dversion=v1.0 -Dpackaging=jar -Dfile=xmlparserv2-904.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xstream-1.3.1 -Dversion=v1.0 -Dpackaging=jar -Dfile=xstream-1.3.1.jar
+mvn install:install-file -DgroupId=com.bi -DartifactId=xsu12 -Dversion=v1.0 -Dpackaging=jar -Dfile=xsu12.jar
+

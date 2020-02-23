@@ -1,0 +1,36 @@
+# debug: true
+spring:
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+#trace=true
+# 打开actuator 所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  port: 8899
+  servlet:
+    context-path: /bi
+#spring.mvc.view.prefix= /WEB-INF/pages/
+#spring.mvc.view.suffix= .jsp
+
+
+logging:
+  config: classpath:config/logback-spring.xml
+  path: D:/deleteme/logbacks
+
+
+
+# bi文件相关设置
+rtf:
+  rtfTemplateFolderPath: D:/deleteme/rtfTemplate  # rtf模板文件位置
+  targetFolderPath: D:/deleteme/target            # 生成的最终pdf存放位置
+  tempFolderPath: D:/deleteme/temp                # 生成pdf中间文件存放位置
+  xdoFilePath: D:/deleteme/xdo.cfg                # 自动生成的配置文件存放位置
+  fontFolderPath: D:/deleteme/font                # 字体文件存放位置

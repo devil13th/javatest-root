@@ -72,6 +72,7 @@ public class LambdaTest extends TestCase {
         resultList.clear();
         System.out.println("=========== 性别是男的人 ============");
         MyFilter sexFilter = new MyFilterThatSex();
+
         for(Person p : list){
             if(sexFilter.test(p)){
                 resultList.add(p);

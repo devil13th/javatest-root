@@ -5,6 +5,5 @@ public interface MyInterface {
 
     public String hello(String name);
 
-//    public String bey(String name);
 }
 

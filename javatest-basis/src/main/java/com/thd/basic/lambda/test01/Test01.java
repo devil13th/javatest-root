@@ -37,5 +37,17 @@ public class Test01 extends TestCase {
 
         new Thread( () -> {System.out.println("lambda 表达式2");});
         System.out.println(1234);
+
+
+
+        //========= 函数接口用下面几种方式定义
+        MyInterface exam01 = name -> "Hello" + name;
+        MyInterface exam02 = (name) -> "Hello" + name;
+        MyInterface exam03 = (String name) -> "Hello" + name;
+
+        MyInterface exam04 = (name) -> name.trim();
+        MyInterface exam05 = String::trim;
+        String x = exam05.hello("  aaa ");
+        System.out.println(x);
     }
 }

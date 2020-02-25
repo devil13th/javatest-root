@@ -8,6 +8,65 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Test01 extends TestCase {
+
+    /**
+     * 创建流
+     * 方法一,集合类的stream方法
+     */
+    @Test
+    public void testCreateStream01(){
+        List list = Arrays.asList(new String[]{"zhangsan","lisi","wangwu","zhaoliu"});
+        // 使用Collection实例的stream()方法创建流
+        Stream st = list.stream();
+        st.forEach(System.out::println);
+    }
+
+    /**
+     * 创建流
+     * 方法二,使用Arrays.stream()静态方法
+     */
+    @Test
+    public void testCreateStream02(){
+        String[] strArray = new String[]{"zhangsan","lisi","wangwu","zhaoliu"};
+        // 使用Arrays.stream()静态方法创建流
+        Stream st = Arrays.stream(strArray);
+        st.forEach(System.out::println);
+    }
+
+    /**
+     * 创建流
+     * 方法三,使用Stream.of静态方法
+     */
+    @Test
+    public void testCreateStream03(){
+        // 使用Stream.of静态方法 创建流
+        Stream st = Stream.of(1,2,3,4,5,6);
+        st.forEach(System.out::println);
+    }
+
+    /**
+     * 创建流
+     * 方法四,使用Stream.iterat创建一个无限流
+     */
+    @Test
+    public void testCreateStream04(){
+        // 使用Stream.iterat创建一个无限流
+        Stream st = Stream.iterate(1,(x) -> (int)(Math.random() * 100));
+        st.forEach(System.out::println);
+    }
+
+    /**
+     * 创建流
+     * 方法五,使用Stream.generate创建一个无限流
+     */
+    @Test
+    public void testCreateStream05(){
+        // 使用Stream.generate创建一个无限流
+        Stream st = Stream.generate(() -> Math.random());
+        st.forEach(System.out::println);
+    }
+
+
     @Test
     public void test01(){
         Stream.of("apple","banana","orange","waltermaleon","grape")

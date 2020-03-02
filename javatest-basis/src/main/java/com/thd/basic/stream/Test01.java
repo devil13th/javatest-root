@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Test01 extends TestCase {
@@ -66,9 +67,88 @@ public class Test01 extends TestCase {
         st.forEach(System.out::println);
     }
 
+    /**
+     * 流的特点1
+     * 不会改变源，最终生成新的流
+     */
+    @Test
+    public void testStreamFeature(){
+        List<MyBean> l = new ArrayList<>();
+        l.add(new MyBean(1,1));
+        l.add(new MyBean(2,2));
+        l.add(new MyBean(3,3));
+        l.add(new MyBean(4,4));
+        l.add(new MyBean(5,5));
+
+        List<MyBean> r = l.stream().filter( item -> item.getGroupA() > 2).collect(Collectors.toList());
+        System.out.println("新结果集");
+        r.forEach(System.out::println);
+        System.out.println("原结果集");
+        l.forEach(System.out::println);
+    }
+
+
+    /**
+     * 流的特点2
+     * 惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算
+     */
+    @Test
+    public void testLayzExecute(){
+        List<MyBean> l = new ArrayList<>();
+        l.add(new MyBean(1,1));
+        l.add(new MyBean(2,2));
+        l.add(new MyBean(3,3));
+        l.add(new MyBean(4,4));
+        l.add(new MyBean(5,5));
+        System.out.println(" 并没有执行中间操作,因为没有终止操作");
+        l.stream().filter( item -> {
+            System.out.println(" -- 中间操作 --" + System.currentTimeMillis());
+            System.out.println(item);
+            return item.getGroupA() > 2;
+        });
+
+        System.out.println(" 执行了中间操作,因为有终止操作，并不是所有中间操作才运行终止操作的");
+        l.stream().filter( item -> {
+            System.out.println(" -- 中间操作 --" + System.currentTimeMillis());
+            System.out.println(item);
+            return item.getGroupA() > 2;
+        }).forEach(item -> {
+            System.out.println(" -- 终止操作 --" + System.currentTimeMillis());
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(item);
+        });
+
+
+    }
+
+
+
+    /**
+     * 流的特点3
+     * 短路，如果出现limit则不会遍历全部集合
+     */
+    @Test
+    public void testShortCircuit(){
+        List<MyBean> l = new ArrayList<>();
+        l.add(new MyBean(1,1));
+        l.add(new MyBean(2,2));
+        l.add(new MyBean(3,3));
+        l.add(new MyBean(4,4));
+        l.add(new MyBean(5,5));
+        System.out.println(" 并没有执行中间操作,因为没有终止操作");
+        l.stream().filter(item -> {System.out.println("middle:" + item);return true;}).limit( 2).forEach(item -> System.out.println("final:" + item));
+
+    }
+
+
+
 
     @Test
-    public void test01(){
+    public void testMap(){
         Stream.of("apple","banana","orange","waltermaleon","grape")
                 .map(new Function<String,Integer>(){
                     @Override
@@ -80,7 +160,7 @@ public class Test01 extends TestCase {
     }
 
     @Test
-    public void test2(){
+    public void testMap02(){
         Stream.of("apple","banana","orange","waltermaleon","grape")
                 .map(new Function<String,Integer>(){
                     @Override
@@ -93,21 +173,21 @@ public class Test01 extends TestCase {
 
 
     @Test
-    public void test03(){
+    public void testMap03(){
         Stream.of("apple","banana","orange","waltermaleon","grape")
                 .map(s->s.length()) //转成单词的长度 int
                 .forEach(e->System.out.println(e)); //输出
     }
 
     @Test
-    public void test04(){
+    public void testMap04(){
         Stream.of("apple","banana","orange","waltermaleon","grape")
                 .map(String::length) //转成单词的长度 int
                 .forEach(e->System.out.println(e)); //输出
     }
 
     @Test
-    public void test05(){
+    public void testForeach(){
         String[] array = {"a", "b", "c", "d", "e"};
 
         //Arrays.stream
@@ -117,6 +197,10 @@ public class Test01 extends TestCase {
         Stream<String> stream2 = Stream.of(array);
         stream2.forEach(x -> System.out.println(x));
     }
+
+
+
+    // --------------------------------  中间操作 -------------------------------------- //
 
     // 去掉重复元素
     @Test
@@ -157,6 +241,7 @@ public class Test01 extends TestCase {
     }
 
 
+
     // 跳过
     @Test
     public void testSkip(){
@@ -174,6 +259,9 @@ public class Test01 extends TestCase {
     public void testSkipAndLimit(){
         Stream.of(1,2,3,4,5,6,7,8,9,10).skip(2).limit(3).forEach(x -> System.out.println(x));
     }
+
+
+    // --------------------------------  终止操作 -------------------------------------- //
 
     @Test
     public void testCount(){
@@ -228,5 +316,19 @@ public class Test01 extends TestCase {
     public void testMin(){
         Optional r = Stream.of(2,4,6,8,10,12,14).min((x,y) -> x > y ? 1 : -1);
         System.out.println(r.get());
+    }
+
+    // 规约
+    @Test
+    public void testReduce(){
+        Integer r = Stream.of(1,2,3,4).reduce(0,(x,y) -> x+y);
+        System.out.println(r);
+    }
+
+    // 收集
+    @Test
+    public void testCollect(){
+        List<Integer> r = Stream.of(1,2,3,4,5).filter(x-> x > 3).collect(Collectors.toList());
+        r.forEach(System.out::println);
     }
 }

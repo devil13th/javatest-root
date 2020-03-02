@@ -318,11 +318,20 @@ public class Test01 extends TestCase {
         System.out.println(r.get());
     }
 
+
     // 规约
     @Test
-    public void testReduce(){
-        Integer r = Stream.of(1,2,3,4).reduce(0,(x,y) -> x+y);
+    public void testReduce() {
+        Integer r = Stream.of(1, 2, 3, 4).reduce(0, (x, y) -> x + y);
         System.out.println(r);
+    }
+
+    // 规约
+    @Test
+    public void testReduce01(){
+        Optional<Integer> r = Optional.of(Stream.of(1,2,3,4).reduce(0,(x,y)-> x+y));
+        int i = r.orElse(-1);
+        System.out.println(i);
     }
 
     // 收集
@@ -331,4 +340,58 @@ public class Test01 extends TestCase {
         List<Integer> r = Stream.of(1,2,3,4,5).filter(x-> x > 3).collect(Collectors.toList());
         r.forEach(System.out::println);
     }
+
+    // 收集
+    @Test
+    public void testCollection(){
+        List<String> l  = Stream.of(1,2,3,4,5).map(x -> "name_" + x).collect(Collectors.toList());
+        l.forEach(System.out::print);
+    }
+
+
+    // 收集  求个数
+    @Test
+    public void testCollection01(){
+        long s  = Stream.of(1,2,3,4,5).map(x -> "name_" + x).collect(Collectors.counting());
+        System.out.println(s);
+    }
+
+    // 收集  求平均值
+    @Test
+    public void testCollection02(){
+        double s  = Stream.of(1,2,3,4,5).map(x -> 1 + x).collect(Collectors.averagingInt(x-> new Integer(x)));
+        System.out.println(s);
+    }
+
+    // 收集 求和
+    @Test
+    public void testCollection03(){
+        int s  = Stream.of(1,2,3,4,5).collect(Collectors.summingInt(Integer :: new));
+        System.out.println(s);
+    }
+
+    // 收集 求最大值
+    @Test
+    public void testCollection04(){
+        Optional<Integer> r  = Stream.of(1,2,3,4,5).collect(Collectors.maxBy((x,y) -> {
+            Integer i = Integer.valueOf(x.toString());
+            Integer j = Integer.valueOf(y.toString());
+            return Integer.compare(i,j);
+        }));
+        Integer result = r.orElseGet(() -> {return -1;});
+        System.out.println(result);
+    }
+
+
+    // 收集 求最大值
+    @Test
+    public void testCollection05(){
+        Integer r = Stream.of(1,2,3,4,5).collect(Collectors.reducing( 1, (x,y) -> {
+           return  x*y;
+        }));
+        System.out.println(r);
+    }
+
+
+
 }

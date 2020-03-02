@@ -318,6 +318,17 @@ public class Test01 extends TestCase {
         System.out.println(r.get());
     }
 
+    // 扁平化
+    @Test
+    public void testFlatMap() {
+        Stream.of(1,2,3).flatMap(item -> {
+            List<MyBean> l = new ArrayList<MyBean>();
+            l.add(new MyBean(item*1,item*2 ));
+            l.add(new MyBean(item*3,item*4 ));
+            l.add(new MyBean(item*5,item*6 ));
+            return l.stream();
+        }).forEach(System.out::println);
+    }
 
     // 规约
     @Test

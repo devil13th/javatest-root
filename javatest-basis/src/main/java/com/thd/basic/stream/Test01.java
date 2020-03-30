@@ -1,8 +1,10 @@
 package com.thd.basic.stream;
 
+import com.thd.jvm.gc.refreneceType.User;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -202,6 +204,17 @@ public class Test01 extends TestCase {
 
     // --------------------------------  中间操作 -------------------------------------- //
 
+    // 提前消费peek 与map和foreach很类似
+    // 与map区别： map有返回值,peek没有返回值
+    // 与foreach区别：foreach是终止操作,peek是中间操作
+    public void testPeek(){
+        Stream.of(
+                new MyBean(1,1),
+                new MyBean(1,2),
+                new MyBean(1,3)
+        ).peek(item -> { item.setGroupA(3);item.setGroupB(4);}).forEach(System.out::println);
+    }
+
     // 去掉重复元素
     @Test
     public void testDistinct(){
@@ -318,7 +331,7 @@ public class Test01 extends TestCase {
         System.out.println(r.get());
     }
 
-    // 扁平化
+    // 扁平化 flatmap ,作用就是将元素拍平拍扁 ，将拍扁的元素重新组成Stream，并将这些Stream 串行合并成一条Stream
     @Test
     public void testFlatMap() {
         Stream.of(1,2,3).flatMap(item -> {
@@ -345,14 +358,49 @@ public class Test01 extends TestCase {
         System.out.println(i);
     }
 
-    // 收集
+    // ------------------------------------------- 收集 -------------------------------------
+
+    // Collectors的方法返回的是一个函数，这个函数对Stream中的集合进行规约操作然后返回结果，省的我们自己去写，例如
+
+    /**
+     * Collectors的方法返回的是一个函数，这个函数对Stream中的集合进行规约操作然后返回结果，省的我们自己去写，例如
+     * 将Stream中的元素放到一个List中然后返回这个List
+     * 将Stream中的元素排序
+     * 将Stream中的元素求和
+     */
+
+    // 收集 Collectors.joining 将所有元素连起来
     @Test
-    public void testCollect(){
+    public void testCollectorsJoining(){
+        // 直接连接
+        String r = Stream.of("1","2","3","4").collect(Collectors.joining());
+        System.out.println(r);
+
+        // 指定连接符
+        r = Stream.of("1","2","3","4").collect(Collectors.joining("-"));
+        System.out.println(r);
+        // 指定连接符和前后缀
+        r = Stream.of("1","2","3","4").collect(Collectors.joining("-","start[","]end"));
+        System.out.println(r);
+    }
+
+
+    // 收集 Collectors.toList
+    @Test
+    public void testCollectorsToList(){
         List<Integer> r = Stream.of(1,2,3,4,5).filter(x-> x > 3).collect(Collectors.toList());
         r.forEach(System.out::println);
     }
 
-    // 收集
+
+    // 收集 Collectors.toList
+    @Test
+    public void testCollectorsToMap(){
+        Map<Integer,Integer> map = Stream.of(1,2,3,4,5).filter(x-> x > 3).collect(Collectors.toMap((item) -> {return item;} , (item) -> {return item * item;}));
+        System.out.println(map);
+    }
+
+    // 收集 Collectors.toList
     @Test
     public void testCollection(){
         List<String> l  = Stream.of(1,2,3,4,5).map(x -> "name_" + x).collect(Collectors.toList());
@@ -362,28 +410,29 @@ public class Test01 extends TestCase {
 
     // 收集  求个数
     @Test
-    public void testCollection01(){
-        long s  = Stream.of(1,2,3,4,5).map(x -> "name_" + x).collect(Collectors.counting());
+    public void testCollectorsCounting(){
+        long s  = Stream.of(1,2,3,4,5).filter(x -> x > 2).collect(Collectors.counting());
         System.out.println(s);
     }
 
     // 收集  求平均值
     @Test
-    public void testCollection02(){
+    public void testCollectorsAverag(){
         double s  = Stream.of(1,2,3,4,5).map(x -> 1 + x).collect(Collectors.averagingInt(x-> new Integer(x)));
         System.out.println(s);
     }
 
     // 收集 求和
     @Test
-    public void testCollection03(){
+    public void testCollectorsSummingInt(){
         int s  = Stream.of(1,2,3,4,5).collect(Collectors.summingInt(Integer :: new));
         System.out.println(s);
+
     }
 
     // 收集 求最大值
     @Test
-    public void testCollection04(){
+    public void testCollectorsMaxBy(){
         Optional<Integer> r  = Stream.of(1,2,3,4,5).collect(Collectors.maxBy((x,y) -> {
             Integer i = Integer.valueOf(x.toString());
             Integer j = Integer.valueOf(y.toString());
@@ -394,13 +443,94 @@ public class Test01 extends TestCase {
     }
 
 
-    // 收集 求最大值
+    // 收集 规约
     @Test
-    public void testCollection05(){
+    public void testCollectorReducing(){
         Integer r = Stream.of(1,2,3,4,5).collect(Collectors.reducing( 1, (x,y) -> {
            return  x*y;
         }));
         System.out.println(r);
+    }
+
+
+    // group by
+    @Test
+    public void testCollectorsGroupingByCounting06(){
+        List<String> items =
+                Arrays.asList("apple", "apple", "banana","apple","orange","apple", "orange", "banana", "papaya");
+        Map<String, Long> result =items
+                .stream()
+                .collect(Collectors.groupingBy(item -> item, Collectors.counting()));
+        System.out.println(result);
+    }
+
+
+    // group by
+    @Test
+    public void testCollectorsGroupby(){
+        List<Price> items = Arrays.asList(
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 20, new BigDecimal("19.99")),
+                new Price("orang", 10, new BigDecimal("29.99")),
+                new Price("watermelon", 10, new BigDecimal("29.99")),
+                new Price("papaya", 20, new BigDecimal("9.99")),
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 10, new BigDecimal("19.99")),
+                new Price("apple", 20, new BigDecimal("9.99"))
+        );
+
+
+        // 计算名字出现的次数
+        System.out.println("------计算名字出现的次数--------");
+        Map<String, Long> counting = items.stream().collect(Collectors.groupingBy(Price::getName, Collectors.counting()));
+        System.out.println(counting);
+
+        System.out.println("------计算每个人购买个数--------");
+
+        // 计算每个人购买个数
+        Map<String, Integer> sum = items.stream().collect(
+                Collectors.groupingBy(Price::getName, Collectors.summingInt(Price::getNum)));
+
+        System.out.println(sum);
+        System.out.println("------- 计算每个人的付款金额-------");
+        // 计算每个人付款金额
+        Map<String, Double> all = items.stream().collect(
+                Collectors.groupingBy(Price::getName, Collectors.summingDouble( item -> {
+                    Price pri = (Price)item;
+                    return pri.getNum() * pri.getPrice().doubleValue();
+                })));
+
+        System.out.println(all);
+
+
+    }
+
+
+    // group by  自定义集合
+    @Test
+    public void testCollectorsGroupby02(){
+        List<Price> items = Arrays.asList(
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 20, new BigDecimal("19.99")),
+                new Price("orang", 10, new BigDecimal("29.99")),
+                new Price("watermelon", 10, new BigDecimal("29.99")),
+                new Price("papaya", 20, new BigDecimal("9.99")),
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 10, new BigDecimal("19.99")),
+                new Price("apple", 20, new BigDecimal("9.99"))
+        );
+
+
+
+        Map<String, BigDecimal> all = items.stream().collect(
+                Collectors.groupingBy(Price::getName, CollectorsUtil.summingBigDecimal(
+                        item -> {
+                            return item.getPrice().multiply( BigDecimal.valueOf(item.getNum()));
+                        }
+                )));
+        System.out.println(all);
+
+
     }
 
 

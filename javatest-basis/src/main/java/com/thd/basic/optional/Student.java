@@ -4,8 +4,9 @@ public class Student {
     private String name;
     private int age;
     private String sex;
-
+    public Student(){}
     public Student(String name, int age, String sex) {
+        System.out.println(" Student Constructor() Be Called [" + name + "]");
         this.name = name;
         this.age = age;
         this.sex = sex;

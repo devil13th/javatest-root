@@ -2,6 +2,7 @@ package com.thd.json.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Test {
@@ -15,7 +16,7 @@ public class Test {
         User u = new User();
         u.setName("devil13th");
         u.setBirthday(new Date());
-
+        u.setCreateTime(LocalDateTime.now());
         String json = mapper.writeValueAsString(u);
         System.out.println(json);
 

@@ -1,4 +1,4 @@
-package com.thd.json;
+package com.thd.json.fastjson;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -22,7 +22,7 @@ public class Person {
     @JSONField(ordinal = 4,name="myAge")
     private Integer age;
 
-    // 指定日期格式
+    // 指定日期格式 (序列化和反序列化)
     @JSONField(format="yyyyMMdd",ordinal = 2)
     private Date birthday;
 

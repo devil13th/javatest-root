@@ -4,11 +4,10 @@
  * Auth : ccse 
 */  
 
-package com.thd.json;
+package com.thd.json.fastjson;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -35,8 +34,8 @@ public class Test {
 	}
 
 	public static void testParseObject(){
-		String json = "{\"name\":\"devil13th\",\"birthday\":\"20191218\",\"createTime\":1576681508433,\"myAge\":5,\"nickName\":\"十三妖\"}";
-		Person p = JSON.parseObject(json,Person.class);
+		String json = "{\"name\":\"devil13th\",\"birthday\":\"2019-12-11\",\"createTime\":1576681508433,\"myAge\":5,\"nickName\":\"十三妖\"}";
+		Person p = JSON.parseObject(json, Person.class);
 		System.out.println(p.toString());
 	}
 

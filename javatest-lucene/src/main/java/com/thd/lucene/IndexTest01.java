@@ -43,7 +43,7 @@ public class IndexTest01 {
 		 * lucene 有若干个Directory实现
 		 * IndexWriter不能对文本进行索引，除非被解析器(analyzer)解析成单独的词
 		*/
-		Directory dir = FSDirectory.open(filesDir);
+		Directory dir = FSDirectory.open(filesDir.toPath());
 		
 		
 		//解析器[[analyzer]]
@@ -58,7 +58,7 @@ public class IndexTest01 {
 		Analyzer analyzer = new IKAnalyzer();
 		
 		//索引配置 建立索引工具所需要的配置
-		IndexWriterConfig iwc =  new IndexWriterConfig(Version.LUCENE_35, analyzer);
+		IndexWriterConfig iwc =  new IndexWriterConfig( analyzer);
 		
 		
 		

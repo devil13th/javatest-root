@@ -32,6 +32,14 @@
 			<artifactId>poi</artifactId>
 			<version>4.1.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jianggujin/IKAnalyzer-lucene -->
+		<dependency>
+			<groupId>com.jianggujin</groupId>
+			<artifactId>IKAnalyzer-lucene</artifactId>
+			<version>8.0.0</version>
+		</dependency>
+
+
 
 
 

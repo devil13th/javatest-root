@@ -30,19 +30,19 @@ public class CreateIndex {
 			System.out.println("被索引的文件夹[" + filesDir + "]不存在或不可读取");
 		}
 
-		Directory dir = FSDirectory.open(filesDir);
+		Directory dir = FSDirectory.open(filesDir.toPath());
 
 		//Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_35);
 		Analyzer analyzer = new IKAnalyzer();
 		
 		//索引配置 建立索引工具所需要的配置
-		IndexWriterConfig iwc =  new IndexWriterConfig(Version.LUCENE_35, analyzer);
+		IndexWriterConfig iwc =  new IndexWriterConfig( analyzer);
 	
 		iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
 		IndexWriter indexWriter =  new IndexWriter(dir, iwc);
 		Document doc = new Document();
 		File file = new File("D:\\lucene\\crud\\files\\test.html");
-		
+
 		Field pathField = new Field("path", file.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS);
 		pathField.setIndexOptions(FieldInfo.IndexOptions.DOCS_ONLY);
         doc.add(pathField);

@@ -533,6 +533,12 @@ public class Test01 extends TestCase {
 
     }
 
+    @Test
+    public void testaaa(){
+        double d = 1d/3d;
+        System.out.println(d);
+    }
+
 
 
 }

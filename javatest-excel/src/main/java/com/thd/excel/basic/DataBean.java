@@ -1,4 +1,4 @@
-package com.thd.excel;
+package com.thd.excel.basic;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 

@@ -31,7 +31,9 @@ public class TestPoi extends TestCase {
     public void test01() throws Exception {
         System.out.println("test");
 
-        String filePath = "D:\\devil13th\\github\\javatest-root\\javatest-poi\\src\\main\\java\\com\\thd\\poi\\datab.xlsx";
+//        String filePath = "D:\\devil13th\\github\\javatest-root\\javatest-poi\\src\\main\\java\\com\\thd\\poi\\datab.xlsx";
+        String filePath = "D:\\deleteme\\aaa.xlsx";
+
         if (!filePath.endsWith(".xls") && !filePath.endsWith(".xlsx")) {
             System.out.println("文件不是excel类型");
         }

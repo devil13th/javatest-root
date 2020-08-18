@@ -32,7 +32,7 @@ public class TestPoi extends TestCase {
         System.out.println("test");
 
 //        String filePath = "D:\\devil13th\\github\\javatest-root\\javatest-poi\\src\\main\\java\\com\\thd\\poi\\datab.xlsx";
-        String filePath = "D:\\deleteme\\aaa.xlsx";
+        String filePath = "D:\\deleteme\\Painting Daily ORT Template.xlsx";
 
         if (!filePath.endsWith(".xls") && !filePath.endsWith(".xlsx")) {
             System.out.println("文件不是excel类型");
@@ -96,6 +96,9 @@ public class TestPoi extends TestCase {
             Object value = null;
             for(int x = 0 , y = columnNum ; x < y ; x++){
                 Cell cell = row.getCell(x);
+                if(cell == null){
+                    continue;
+                }
                 System.out.println("  类型 ： " + cell.getCellType() );
                 switch (cell.getCellType()) {
                     case HSSFCell.CELL_TYPE_NUMERIC: // 数字

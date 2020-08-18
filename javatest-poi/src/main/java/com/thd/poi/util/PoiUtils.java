@@ -57,11 +57,14 @@ public class PoiUtils {
                 XSSFDrawing drawing = (XSSFDrawing) part;
                 List<XSSFShape> shapes = drawing.getShapes();
                 for (XSSFShape shape : shapes) {
-                    XSSFPicture picture = (XSSFPicture) shape;
-                    XSSFClientAnchor anchor = picture.getPreferredSize();
-                    CTMarker marker = anchor.getFrom();
-                    String key = marker.getRow() + "-" + marker.getCol();
-                    map.put(key, picture.getPictureData());
+
+                    if(shape instanceof  XSSFPicture) {
+                        XSSFPicture picture = (XSSFPicture) shape;
+                        XSSFClientAnchor anchor = picture.getPreferredSize();
+                        CTMarker marker = anchor.getFrom();
+                        String key = marker.getRow() + "-" + marker.getCol();
+                        map.put(key, picture.getPictureData());
+                    }
                 }
             }
         }

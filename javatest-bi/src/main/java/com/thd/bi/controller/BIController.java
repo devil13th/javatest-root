@@ -42,7 +42,7 @@ public class BIController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value="/test",method= RequestMethod.GET)
     @ResponseBody
-    // url : http://127.0.0.1:8089/bi/test
+    // url : http://127.0.0.1:8899/bi/bi/test
     public ResponseEntity<Result> test(){
         ModelBean mb = new ModelBean();
         List<SubList> sl = new ArrayList<SubList>();
@@ -67,7 +67,7 @@ public class BIController {
 
     @RequestMapping(value="/example",method= RequestMethod.GET)
     @ResponseBody
-    // url : http://127.0.0.1:8089/bi/example
+    // url : http://127.0.0.1:8899/bi/bi/example
     public ResponseEntity<String> example(@RequestBody ModelBean mb){
         try{
             String pdfPath = rtfUtils.createPdf(mb,"testForm.rtf","auditDOC");

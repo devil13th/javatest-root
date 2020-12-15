@@ -17,8 +17,8 @@ public class DynamicProxy implements InvocationHandler {
         System.out.println("代理输出:before rent house");
         
         System.out.println("代理输出:Method:" + method);
-        
-        //当代理对象调用真实对象的方法时，其会自动的跳转到代理对象关联的handler对象的invoke方法来进行调用
+        // 通过反射调用真实对象的方法
+        // 当代理对象调用真实对象的方法时，其会自动的跳转到代理对象关联的handler对象的invoke方法来进行调用
         Object result =  method.invoke(subject, args);
         //在代理真实对象后我们也可以添加一些自己的操作
         System.out.println("代理输出:after rent house");

@@ -329,6 +329,9 @@ public class Test01 extends TestCase {
     public void testMin(){
         Optional r = Stream.of(2,4,6,8,10,12,14).min((x,y) -> x > y ? 1 : -1);
         System.out.println(r.get());
+
+
+
     }
 
     // 扁平化 flatmap ,作用就是将元素拍平拍扁 ，将拍扁的元素重新组成Stream，并将这些Stream 串行合并成一条Stream

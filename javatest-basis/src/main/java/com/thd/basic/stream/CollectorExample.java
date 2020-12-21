@@ -53,6 +53,17 @@ public class CollectorExample {
         System.out.println("count:" + statistics.getCount() + ",max:" + statistics.getMax() + ",sum:" + statistics.getSum() + ",average:" + statistics.getAverage());
 
 
+        System.out.println("顺序操作");
+        Student firstItem = new Student("",0,0);
+        Student s = list.stream().reduce(firstItem,(left,right) -> {
+            System.out.println(left.getAge() + "|" + right.getAge());
+            right.setAge(left.getAge() + right.getAge());
+            return right;
+        });
+        System.out.println(s.getAge());
+
+
+
         System.out.println("========== 分组操作 ===========");
         //分组
         Map<Integer, List<Student>> ageMap = list.stream().collect(Collectors.groupingBy(Student::getAge));

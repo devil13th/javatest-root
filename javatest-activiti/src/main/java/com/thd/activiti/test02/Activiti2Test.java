@@ -10,7 +10,10 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 
 import com.thd.activiti.ActivitiTestCase;
-
+/**
+ * 该例子说明：
+ * 使用流程变量判断路径
+ */
 public class Activiti2Test extends ActivitiTestCase{
 	
 	

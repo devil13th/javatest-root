@@ -23,7 +23,10 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.test.ActivitiRule;
 import org.junit.Rule;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+/**
+ * 该例子说明：
+ * 并签
+ */
 public class Activiti01Test extends TestCase{
 	private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"com/thd/activiti/activiti.cfg1.xml"});
 	private ProcessEngine processEngine = (ProcessEngine)context.getBean("processEngine");

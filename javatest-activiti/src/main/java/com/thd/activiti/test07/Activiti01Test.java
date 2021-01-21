@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
-
 import junit.framework.TestCase;
 
 import org.activiti.bpmn.converter.BpmnXMLConverter;
@@ -32,6 +29,10 @@ import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.apache.commons.io.FileUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * 该例子说明：
+ * 从流程变量中获取代办人的例子
+ */
 public class Activiti01Test extends TestCase{
 	private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"com/thd/activiti/activiti.cfg1.xml"});
 	private ProcessEngine processEngine = (ProcessEngine)context.getBean("processEngine");

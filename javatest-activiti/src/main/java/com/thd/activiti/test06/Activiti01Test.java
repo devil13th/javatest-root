@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
 
 import junit.framework.TestCase;
 
@@ -32,6 +30,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.thd.activiti.myutil.MyActivitiUtil;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
+
+/**
+ * 该例子说明：
+ * 并签
+ */
 public class Activiti01Test extends TestCase{
 	private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"com/thd/activiti/activiti.cfg1.xml"});
 	private ProcessEngine processEngine = (ProcessEngine)context.getBean("processEngine");
@@ -94,8 +99,8 @@ public class Activiti01Test extends TestCase{
         
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("com/thd/activiti/test06/draw.bpmn");    //获取xml文件流  
         System.out.println(is);
-        XMLInputFactory xmlFactory  = XMLInputFactory.newInstance();  
-        XMLStreamReader reader = xmlFactory.createXMLStreamReader(is); 
+        XMLInputFactory xmlFactory  = XMLInputFactory.newInstance();
+        XMLStreamReader reader = xmlFactory.createXMLStreamReader(is);
         BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(reader);
         ProcessDiagramGenerator pdg = new DefaultProcessDiagramGenerator();
         System.out.println(runtimeService.getActiveActivityIds("60001"));

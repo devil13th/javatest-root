@@ -20,7 +20,10 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+/**
+ * 该例子说明：
+ * 串签
+ */
 public class Activiti01Test extends TestCase{
 	
 	

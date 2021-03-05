@@ -4,7 +4,7 @@
 
 ## 安装jar到maven
 因本项目用了一些第三方jar,这些jar在远程库中没有，所以先要将项目用到的jar安装到本地maven库中，
-进入到jar目录下解压缩jar.zip,打开install-jar-to-local.bat文件，将里面的内容一行行的执行一下，不可双击执行，因为双击只能执行第一行
+进入到jar目录下解压缩jar.zip,打开jar/install-jar-to-local.bat文件，将里面的内容一行行的执行一下，不可双击执行，因为双击只能执行第一行
 
 ## 配置文件
 

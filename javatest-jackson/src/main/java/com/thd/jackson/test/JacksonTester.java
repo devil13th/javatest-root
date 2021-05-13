@@ -204,6 +204,8 @@ public class JacksonTester extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
 
         User04 user = mapper.readValue(str,User04.class);
+
+
         System.out.println(user);
     }
 

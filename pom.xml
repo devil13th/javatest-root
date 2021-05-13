@@ -60,7 +60,8 @@
         <module>javatest-excel</module>
         <module>javatest-pdf</module>
         <module>javatest-bi</module>
-        <module>javatest-poi</module><module>javatest-jackson</module>
+        <module>javatest-poi</module>
+		<module>javatest-jackson</module>
     </modules>
 
 

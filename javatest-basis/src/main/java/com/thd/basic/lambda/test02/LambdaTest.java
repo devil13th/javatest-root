@@ -3,7 +3,9 @@ package com.thd.basic.lambda.test02;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -40,5 +42,17 @@ public class LambdaTest extends TestCase {
         thread.start();
 
         System.out.println("finish");
+    }
+
+
+    @Test
+    public void test03(){
+        List<Student> stList = new ArrayList<Student>();
+        stList.add(new Student("张三",3,"男"));
+        stList.add(new Student("李四",4,"女"));
+        stList.add(new Student("王五",5,"男"));
+
+        stList.stream().forEach(Student::prt);
+
     }
 }

@@ -34,4 +34,13 @@ public class Student {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+
+    public void prt() {
+        System.out.println( "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}');
+    }
 }

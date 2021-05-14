@@ -136,6 +136,16 @@ public class OptionalTest extends TestCase {
     }
 
     /**
+     * flatMap方法，返回一个对象的处理结果
+     * 该方法与map方法类似，只不过要返回一个Optional对象
+     */
+    public void testFlatMap(){
+        Student st = new Student("zhangsan",5,"1");
+        String name = Optional.of(st).flatMap( v -> Optional.of(v.getName())).orElseGet(() -> "");
+        System.out.println(name);
+    }
+
+    /**
      * filter方法
      * 如果满足filter中的条件则返回当前Optional的对象否则返回空对象
      */
@@ -162,6 +172,63 @@ public class OptionalTest extends TestCase {
         System.out.println(Optional.ofNullable(st).isPresent()); // false
         Optional.ofNullable(st).filter( u -> u.getAge() > 18).ifPresent(u ->  System.out.println("The student age is more than 18.")); // 不输出因为Optional的值是空
 
+    }
+
+    @Test
+    // 去除if
+    public void testRemoveIf(){
+        Student st = new Student();
+        Address addr = new Address("北京西城");
+        st.setAddr(addr);
+
+
+        // 传统写法
+        if(st != null){
+            Address ad = st.getAddr();
+            if(ad != null){
+                String adStr = ad.getAddr();
+                if(null != adStr){
+                    System.out.println(" do something");
+                }
+            }
+        }
+
+
+        // 去除if, 无论是student还是addr或是addr.addr属性 为空就会抛出异常,避免了一层层的检查
+        // 测试1  student是null
+        Optional<Student> stOpt = Optional.ofNullable(null);
+        try{
+            String addrStr = stOpt.map(item -> item.getAddr()).map(item -> item.getAddr()).orElseThrow( () -> new RuntimeException("没有地址"));
+            System.out.println(addrStr);
+        }catch(Exception e){
+            System.out.println("测试1" + e.getMessage());
+        }
+
+
+        // 测试2 address是null
+        try{
+            Student st2 = new Student();
+            String addrStr2 = Optional.ofNullable(st2).map(item -> item.getAddr()).map(item -> item.getAddr()).orElseThrow( () -> new RuntimeException("没有地址"));
+            System.out.println(addrStr2);
+        }catch(Exception e){
+            System.out.println("测试2" + e.getMessage());
+        }
+
+
+        // 测试3 address.addr属性是空
+        Student st3 = new Student();
+        Address ad3 = new Address(null);
+        try{
+            String addrStr3 = Optional.ofNullable(st3).map(item -> item.getAddr()).map(item -> item.getAddr()).orElseThrow( () -> new RuntimeException("没有地址"));
+            System.out.println(addrStr3);
+        }catch(Exception e){
+            System.out.println("测试3" + e.getMessage());
+        }
+
+
+
+
 
     }
+
 }

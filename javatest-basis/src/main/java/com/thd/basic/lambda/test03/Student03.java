@@ -1,13 +1,11 @@
-package com.thd.basic.optional;
+package com.thd.basic.lambda.test03;
 
-public class Student {
+public class Student03 {
     private String name;
     private int age;
     private String sex;
-    private Address addr;
-    public Student(){}
-    public Student(String name, int age, String sex) {
-        System.out.println(" Student Constructor() Be Called [" + name + "]");
+
+    public Student03(String name, int age, String sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
@@ -37,20 +35,12 @@ public class Student {
         this.sex = sex;
     }
 
-    public Address getAddr() {
-        return addr;
-    }
 
-    public void setAddr(Address addr) {
-        this.addr = addr;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
+    public void prt() {
+        System.out.println( "Student{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", sex='" + sex + '\'' +
-                '}';
+                '}');
     }
 }

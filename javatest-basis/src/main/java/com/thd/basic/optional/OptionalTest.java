@@ -189,14 +189,21 @@ public class OptionalTest extends TestCase {
                 String adStr = ad.getAddr();
                 if(null != adStr){
                     System.out.println(" do something");
+                }else{
+                    throw new RuntimeException(" addr not be found");
                 }
+            }else{
+                throw new RuntimeException(" addr not be found");
             }
+        }else{
+            throw new RuntimeException(" addr not be found");
         }
 
 
         // 去除if, 无论是student还是addr或是addr.addr属性 为空就会抛出异常,避免了一层层的检查
         // 测试1  student是null
         Optional<Student> stOpt = Optional.ofNullable(null);
+
         try{
             String addrStr = stOpt.map(item -> item.getAddr()).map(item -> item.getAddr()).orElseThrow( () -> new RuntimeException("没有地址"));
             System.out.println(addrStr);

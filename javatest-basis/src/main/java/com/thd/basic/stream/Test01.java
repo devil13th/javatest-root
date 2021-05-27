@@ -330,8 +330,6 @@ public class Test01 extends TestCase {
         Optional r = Stream.of(2,4,6,8,10,12,14).min((x,y) -> x > y ? 1 : -1);
         System.out.println(r.get());
 
-
-
     }
 
     // 扁平化 flatmap ,作用就是将元素拍平拍扁 ，将拍扁的元素重新组成Stream，并将这些Stream 串行合并成一条Stream
@@ -532,6 +530,44 @@ public class Test01 extends TestCase {
                         }
                 )));
         System.out.println(all);
+
+
+    }
+
+
+
+    // group by  每个分组的最大值
+    @Test
+    public void testCollectorsGroupby03(){
+        List<Price> items = Arrays.asList(
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 20, new BigDecimal("19.99")),
+                new Price("orang", 10, new BigDecimal("29.99")),
+                new Price("watermelon", 10, new BigDecimal("29.99")),
+                new Price("papaya", 20, new BigDecimal("9.99")),
+                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("banana", 10, new BigDecimal("19.99")),
+                new Price("apple", 20, new BigDecimal("9.99"))
+        );
+
+
+        // 分组求和
+        Map<String, Integer> all = items.stream().collect(
+                Collectors.groupingBy(Price::getName,Collectors.summingInt(Price::getNum))
+        );
+        System.out.println(all);
+
+
+        // 分组求平均值
+        Map<String, Double> all2 = items.stream().collect(
+                Collectors.groupingBy(Price::getName,Collectors.averagingInt( item -> item.getNum()))
+        );
+
+        // 分组求集合
+        Map<String, List<Price>> all3 = items.stream().collect(
+                Collectors.groupingBy(Price::getName,Collectors.toList())
+        );
+        System.out.println(all3);
 
 
     }

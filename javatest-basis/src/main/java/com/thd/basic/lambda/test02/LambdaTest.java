@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -32,6 +33,13 @@ public class LambdaTest extends TestCase {
         // 举例4
         BiPredicate<String, String> bp = (x,y) -> x.equals(y);	 //使用Lambda表达式
         BiPredicate<String, String> bp1 = String::equals;		 //使用方法引用
+
+        // 举例5
+        BiFunction<Integer, Integer,Integer> bf = (x, y) -> x + y;	 //使用Lambda表达式
+
+        Integer c = bf.apply(1,2);
+        System.out.println(c);
+
     }
 
 

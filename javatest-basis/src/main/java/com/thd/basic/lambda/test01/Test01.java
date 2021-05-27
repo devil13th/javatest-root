@@ -49,5 +49,7 @@ public class Test01 extends TestCase {
         MyInterface exam05 = String::trim;
         String x = exam05.hello("  aaa ");
         System.out.println(x);
+
+
     }
 }

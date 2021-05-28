@@ -42,4 +42,13 @@ public class Price {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Price{" +
+                "name='" + name + '\'' +
+                ", num=" + num +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -280,6 +280,7 @@ public class Test01 extends TestCase {
     public void testCount(){
         long i = Stream.of(1,2,3,4,5,6,7,8,9,10).count();
         System.out.println(i);
+
     }
 
     // 获取第一个
@@ -540,7 +541,7 @@ public class Test01 extends TestCase {
     @Test
     public void testCollectorsGroupby03(){
         List<Price> items = Arrays.asList(
-                new Price("apple", 10, new BigDecimal("9.99")),
+                new Price("apple", 50, new BigDecimal("9.99")),
                 new Price("banana", 20, new BigDecimal("19.99")),
                 new Price("orang", 10, new BigDecimal("29.99")),
                 new Price("watermelon", 10, new BigDecimal("29.99")),
@@ -552,22 +553,39 @@ public class Test01 extends TestCase {
 
 
         // 分组求和
-        Map<String, Integer> all = items.stream().collect(
+        Map<String, Integer> sumResult = items.stream().collect(
                 Collectors.groupingBy(Price::getName,Collectors.summingInt(Price::getNum))
         );
-        System.out.println(all);
+        System.out.println(sumResult);
 
 
         // 分组求平均值
-        Map<String, Double> all2 = items.stream().collect(
-                Collectors.groupingBy(Price::getName,Collectors.averagingInt( item -> item.getNum()))
+        Map<String, Double> aveResult = items.stream().collect(
+                Collectors.groupingBy(item -> item.getName(),Collectors.averagingInt( item -> item.getNum()))
         );
+        System.out.println(aveResult);
+
+        // 分组求最大值
+        Map<String,Price> maxResult = items.stream().collect(
+                Collectors.groupingBy(
+                        item -> item.getName(),
+                        Collectors.collectingAndThen(
+                                Collectors.reducing(
+                                        ( c1,  c2) -> c1.getNum() > c2.getNum() ? c1 : c2
+                                ),
+                                Optional::get
+                        )
+                )
+        );
+        System.out.println(maxResult);
+
 
         // 分组求集合
         Map<String, List<Price>> all3 = items.stream().collect(
                 Collectors.groupingBy(Price::getName,Collectors.toList())
         );
         System.out.println(all3);
+
 
 
     }
